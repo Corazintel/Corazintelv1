@@ -1,0 +1,26 @@
+<section class="mx-auto max-w-lg px-4 pt-12 pb-12">
+  <div class="rounded-3xl border border-slate-800 bg-slate-900/30 p-6">
+    <h1 class="text-2xl font-display text-white">Admin login</h1>
+    <p class="mt-2 text-sm text-slate-300">Use your admin credentials.</p>
+
+    <% if (error) { %>
+      <div class="mt-4 rounded-2xl border border-rose-800 bg-rose-900/20 p-3 text-rose-200 text-sm">
+        <%= error %>
+      </div>
+    <% } %>
+
+    <form method="post" action="/admin/login" class="mt-6">
+      <label class="block text-sm text-slate-200 font-semibold" for="user">Username</label>
+      <input class="input mt-2" id="user" name="user" autocomplete="username" required />
+
+      <label class="block text-sm text-slate-200 font-semibold mt-5" for="pass">Password</label>
+      <input class="input mt-2" id="pass" name="pass" type="password" autocomplete="current-password" required />
+
+      <button class="btn btn-primary w-full mt-6" type="submit">Login</button>
+
+      <div class="mt-3 text-xs text-slate-400">
+        Production: set ADMIN_USER / ADMIN_PASSWORD in hosting env vars.
+      </div>
+    </form>
+  </div>
+</section>

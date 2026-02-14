@@ -1,0 +1,18 @@
+{
+  "name": "corazintel",
+  "version": "1.0.0",
+  "description": "Corazintel — Real Solutions. Multifaceted Expertise.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.3.1",
+    "ejs": "^3.1.9",
+    "express-ejs-layouts": "^2.5.1",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3"
+  }
+}

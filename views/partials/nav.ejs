@@ -1,0 +1,12 @@
+<nav class="flex flex-wrap items-center justify-between gap-4 px-4 py-4 md:px-8 bg-slate-900/80 border-b border-slate-800">
+  <a class="font-display text-xl text-white hover:text-emerald-300" href="/"><%= typeof brand !== 'undefined' ? brand.name : 'Corazintel' %></a>
+  <div class="flex items-center gap-6 text-slate-300">
+    <a class="hover:text-white <%= currentPath === '/' ? 'text-white' : '' %>" href="/">Home</a>
+    <% if (typeof isAdmin !== 'undefined' && isAdmin) { %>
+      <a class="hover:text-white <%= typeof currentPath !== 'undefined' && currentPath.startsWith('/admin') ? 'text-white' : '' %>" href="/admin">Admin</a>
+      <form method="post" action="/admin/logout" class="inline">
+        <button class="hover:text-white text-slate-300 font-medium" type="submit">Logout</button>
+      </form>
+    <% } %>
+  </div>
+</nav>

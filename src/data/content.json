@@ -1,0 +1,75 @@
+{
+  "brand": {
+    "slogan": "Corazintel — Real Solutions. Multifaceted Expertise."
+  },
+  "hero": {
+    "headline": "Buy the help you need — career, credit, tech, beauty, and design.",
+    "subheadline": "Corazintel gives you fast, straightforward services you can purchase in minutes. Pick a category, choose a service, and check out securely with Stripe.",
+    "benefits": [
+      "Clear pricing, buy in 2–3 clicks",
+      "Fast turnaround options (shown per service)",
+      "Simple intake after purchase",
+      "Mobile-first and easy to use",
+      "Secure Stripe Checkout",
+      "Clean deliverables and readable formatting",
+      "One place for career + credit + tech + beauty + design",
+      "Real support, not confusing packages"
+    ]
+  },
+  "categoriesCopy": {
+    "career_docs": "Clean, professional documents that get you interviews and approvals. You buy the service, send your details, and get a polished result fast.",
+    "credit_finance": "Hands-on credit help with a step-by-step plan. You get a clear path, dispute guidance, and progress tracking options.",
+    "tech_support": "Fixes and setup without the runaround. You get practical help for devices, performance issues, and everyday tech problems.",
+    "beauty_wellness": "Facials and body contour with a results-first approach. Book, prep, and show up ready — we keep it simple and clean.",
+    "digital_products": "Websites and apps built for speed and conversion. You get clear scope, timelines, and production-ready delivery.",
+    "branding_print": "Logos, flyers, business cards, and print-ready assets. You get modern design that looks premium and works everywhere."
+  },
+  "testimonials": [
+    {
+      "quote": "Fast and clear.",
+      "text": "Bought the service, sent my info, and got results quickly.",
+      "by": "Client"
+    },
+    {
+      "quote": "Professional quality.",
+      "text": "Clean formatting, strong structure, and easy communication.",
+      "by": "Client"
+    },
+    {
+      "quote": "One place for everything.",
+      "text": "Career + tech help + design. Checkout was simple.",
+      "by": "Client"
+    }
+  ],
+  "faq": [
+    {
+      "q": "Do I need to message before buying?",
+      "a": "No. Buy the service, then follow the intake instructions on the success page."
+    },
+    {
+      "q": "How do categories work?",
+      "a": "Stripe products are tagged using metadata so the site auto-sorts them."
+    },
+    {
+      "q": "Can I buy from my phone?",
+      "a": "Yes. The layout is mobile-first and Stripe Checkout is mobile-ready."
+    },
+    {
+      "q": "What if Stripe isn't connected yet?",
+      "a": "The site shows demo services so you can preview and deploy anytime."
+    }
+  ],
+  "contact": {
+    "email": "your@email.com",
+    "phone": "",
+    "location": ""
+  },
+  "social": {
+    "instagram": "#",
+    "tiktok": "#",
+    "youtube": "#"
+  },
+  "footer": {
+    "note": "Secure checkout via Stripe. Mobile-first. Fast service flow."
+  }
+}
