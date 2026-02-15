@@ -83,7 +83,7 @@ router.patch('/api/orders/:id', requireAdmin, async (req, res) => {
     try {
         const allowedFields = [
             'status', 'priority', 'assignedTo', 'internalNotes',
-            'tags', 'dueDate', 'paymentStatus', 'category', 'amount'
+            'tags', 'dueDate', 'paymentStatus', 'category', 'amount', 'stripe'
         ];
 
         const updates = {};

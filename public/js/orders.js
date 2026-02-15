@@ -3,44 +3,44 @@
 
 // Category colors mapping
 const CATEGORY_COLORS = {
-    'Beauty': '#E11D48',
-    'Credit Services': '#2563EB',
-    'Web Development': '#7C3AED',
-    'Graphic Design': '#F59E0B',
-    'Document Creation': '#10B981'
+  'Beauty': '#E11D48',
+  'Credit Services': '#2563EB',
+  'Web Development': '#7C3AED',
+  'Graphic Design': '#F59E0B',
+  'Document Creation': '#10B981'
 };
 
 // Status colors mapping
 const STATUS_COLORS = {
-    'New': '#3B82F6',
-    'In Progress': '#8B5CF6',
-    'Waiting on Client': '#F59E0B',
-    'Completed': '#10B981',
-    'Cancelled': '#6B7280'
+  'New': '#3B82F6',
+  'In Progress': '#8B5CF6',
+  'Waiting on Client': '#F59E0B',
+  'Completed': '#10B981',
+  'Cancelled': '#6B7280'
 };
 
 // Payment colors mapping
 const PAYMENT_COLORS = {
-    'Unpaid': '#EF4444',
-    'Deposit Paid': '#F59E0B',
-    'Paid': '#10B981',
-    'Refunded': '#6B7280'
+  'Unpaid': '#EF4444',
+  'Deposit Paid': '#F59E0B',
+  'Paid': '#10B981',
+  'Refunded': '#6B7280'
 };
 
 // Email templates
 const EMAIL_TEMPLATES = {
-    request_info: {
-        subject: 'We need more information about your order',
-        body: 'Hi [Customer Name],\n\nWe\'re working on your order and need some additional information to proceed.\n\nCould you please provide:\n- [Detail 1]\n- [Detail 2]\n\nThank you!\n\nBest regards,\nCorazintel Team'
-    },
-    payment_reminder: {
-        subject: 'Payment reminder for your order',
-        body: 'Hi [Customer Name],\n\nThis is a friendly reminder about the payment for your order.\n\nOrder: [Order Subject]\nAmount: $[Amount]\n\nPlease let us know if you have any questions.\n\nBest regards,\nCorazintel Team'
-    },
-    ready_review: {
-        subject: 'Your order is ready for review',
-        body: 'Hi [Customer Name],\n\nGreat news! Your order is ready for review.\n\nPlease take a look and let us know if any changes are needed.\n\nBest regards,\nCorazintel Team'
-    }
+  request_info: {
+    subject: 'We need more information about your order',
+    body: 'Hi [Customer Name],\n\nWe\'re working on your order and need some additional information to proceed.\n\nCould you please provide:\n- [Detail 1]\n- [Detail 2]\n\nThank you!\n\nBest regards,\nCorazintel Team'
+  },
+  payment_reminder: {
+    subject: 'Payment reminder for your order',
+    body: 'Hi [Customer Name],\n\nThis is a friendly reminder about the payment for your order.\n\nOrder: [Order Subject]\nAmount: $[Amount]\n\nPlease let us know if you have any questions.\n\nBest regards,\nCorazintel Team'
+  },
+  ready_review: {
+    subject: 'Your order is ready for review',
+    body: 'Hi [Customer Name],\n\nGreat news! Your order is ready for review.\n\nPlease take a look and let us know if any changes are needed.\n\nBest regards,\nCorazintel Team'
+  }
 };
 
 // State
@@ -67,153 +67,153 @@ const filterCountBadge = document.getElementById('filterCount');
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
-    loadOrders();
-    setupEventListeners();
+  loadOrders();
+  setupEventListeners();
 });
 
 // Setup Event Listeners
 function setupEventListeners() {
-    // Search
-    searchInput.addEventListener('input', (e) => {
-        clearTimeout(searchDebounceTimer);
-        searchDebounceTimer = setTimeout(() => {
-            currentFilters.q = e.target.value;
-            loadOrders();
-        }, 300);
-    });
+  // Search
+  searchInput.addEventListener('input', (e) => {
+    clearTimeout(searchDebounceTimer);
+    searchDebounceTimer = setTimeout(() => {
+      currentFilters.q = e.target.value;
+      loadOrders();
+    }, 300);
+  });
 
-    // Filter panel
-    filterBtn.addEventListener('click', () => {
-        filterPanel.style.display = 'flex';
-    });
+  // Filter panel
+  filterBtn.addEventListener('click', () => {
+    filterPanel.style.display = 'flex';
+  });
 
-    closeFiltersBtn.addEventListener('click', () => {
-        filterPanel.style.display = 'none';
-    });
+  closeFiltersBtn.addEventListener('click', () => {
+    filterPanel.style.display = 'none';
+  });
 
-    applyFiltersBtn.addEventListener('click', () => {
-        applyFilters();
-        filterPanel.style.display = 'none';
-    });
+  applyFiltersBtn.addEventListener('click', () => {
+    applyFilters();
+    filterPanel.style.display = 'none';
+  });
 
-    clearFiltersBtn.addEventListener('click', () => {
-        clearFilters();
-    });
+  clearFiltersBtn.addEventListener('click', () => {
+    clearFilters();
+  });
 
-    // Detail panel
-    closeDetailBtn.addEventListener('click', () => {
-        closeDetailPanel();
-    });
+  // Detail panel
+  closeDetailBtn.addEventListener('click', () => {
+    closeDetailPanel();
+  });
 
-    // Email modal
-    closeEmailModalBtn.addEventListener('click', () => {
-        emailModal.style.display = 'none';
-    });
+  // Email modal
+  closeEmailModalBtn.addEventListener('click', () => {
+    emailModal.style.display = 'none';
+  });
 
-    document.getElementById('cancelEmail').addEventListener('click', () => {
-        emailModal.style.display = 'none';
-    });
+  document.getElementById('cancelEmail').addEventListener('click', () => {
+    emailModal.style.display = 'none';
+  });
 
-    document.getElementById('sendEmail').addEventListener('click', () => {
-        sendEmail();
-    });
+  document.getElementById('sendEmail').addEventListener('click', () => {
+    sendEmail();
+  });
 
-    document.getElementById('emailTemplate').addEventListener('change', (e) => {
-        applyEmailTemplate(e.target.value);
-    });
+  document.getElementById('emailTemplate').addEventListener('change', (e) => {
+    applyEmailTemplate(e.target.value);
+  });
 
-    // Export
-    exportBtn.addEventListener('click', () => {
-        exportToCSV();
-    });
+  // Export
+  exportBtn.addEventListener('click', () => {
+    exportToCSV();
+  });
 
-    // New order
-    newOrderBtn.addEventListener('click', () => {
-        alert('New order form would open here. For testing, use the seed data function in the console: seedTestData()');
-    });
+  // New order
+  newOrderBtn.addEventListener('click', () => {
+    alert('New order form would open here. For testing, use the seed data function in the console: seedTestData()');
+  });
 
-    // Close modals on outside click
-    emailModal?.addEventListener('click', (e) => {
-        if (e.target === emailModal) {
-            emailModal.style.display = 'none';
-        }
-    });
+  // Close modals on outside click
+  emailModal?.addEventListener('click', (e) => {
+    if (e.target === emailModal) {
+      emailModal.style.display = 'none';
+    }
+  });
 }
 
 // Load Orders from API
 async function loadOrders() {
-    try {
-        showLoading();
+  try {
+    showLoading();
 
-        const queryParams = new URLSearchParams();
+    const queryParams = new URLSearchParams();
 
-        if (currentFilters.q) queryParams.set('q', currentFilters.q);
-        if (currentFilters.status) queryParams.set('status', currentFilters.status.join(','));
-        if (currentFilters.category) queryParams.set('category', currentFilters.category.join(','));
-        if (currentFilters.priority) queryParams.set('priority', currentFilters.priority.join(','));
-        if (currentFilters.paymentStatus) queryParams.set('paymentStatus', currentFilters.paymentStatus.join(','));
-        if (currentFilters.assignedTo) queryParams.set('assignedTo', currentFilters.assignedTo);
-        if (currentFilters.dateFrom) queryParams.set('dateFrom', currentFilters.dateFrom);
-        if (currentFilters.dateTo) queryParams.set('dateTo', currentFilters.dateTo);
+    if (currentFilters.q) queryParams.set('q', currentFilters.q);
+    if (currentFilters.status) queryParams.set('status', currentFilters.status.join(','));
+    if (currentFilters.category) queryParams.set('category', currentFilters.category.join(','));
+    if (currentFilters.priority) queryParams.set('priority', currentFilters.priority.join(','));
+    if (currentFilters.paymentStatus) queryParams.set('paymentStatus', currentFilters.paymentStatus.join(','));
+    if (currentFilters.assignedTo) queryParams.set('assignedTo', currentFilters.assignedTo);
+    if (currentFilters.dateFrom) queryParams.set('dateFrom', currentFilters.dateFrom);
+    if (currentFilters.dateTo) queryParams.set('dateTo', currentFilters.dateTo);
 
-        const response = await fetch(`/api/orders?${queryParams.toString()}`);
+    const response = await fetch(`/api/orders?${queryParams.toString()}`);
 
-        if (!response.ok) {
-            throw new Error('Failed to load orders');
-        }
-
-        const data = await response.json();
-        allOrders = data.orders;
-
-        renderOrdersList(allOrders);
-        updateFilterCount();
-
-    } catch (error) {
-        console.error('Error loading orders:', error);
-        showError();
+    if (!response.ok) {
+      throw new Error('Failed to load orders');
     }
+
+    const data = await response.json();
+    allOrders = data.orders;
+
+    renderOrdersList(allOrders);
+    updateFilterCount();
+
+  } catch (error) {
+    console.error('Error loading orders:', error);
+    showError();
+  }
 }
 
 // Show loading state
 function showLoading() {
-    ordersList.innerHTML = '<div class="loading"><div class="spinner"></div><p>Loading orders...</p></div>';
+  ordersList.innerHTML = '<div class="loading"><div class="spinner"></div><p>Loading orders...</p></div>';
 }
 
 // Show error state
 function showError() {
-    ordersList.innerHTML = '<div class="error"><p>Failed to load orders. Please try again.</p></div>';
+  ordersList.innerHTML = '<div class="error"><p>Failed to load orders. Please try again.</p></div>';
 }
 
 // Render Orders List
 function renderOrdersList(orders) {
-    if (orders.length === 0) {
-        ordersList.innerHTML = '<div class="empty-state"><p>No orders found. Try adjusting your filters.</p></div>';
-        return;
-    }
+  if (orders.length === 0) {
+    ordersList.innerHTML = '<div class="empty-state"><p>No orders found. Try adjusting your filters.</p></div>';
+    return;
+  }
 
-    const html = orders.map(order => renderOrderCard(order)).join('');
-    ordersList.innerHTML = html;
+  const html = orders.map(order => renderOrderCard(order)).join('');
+  ordersList.innerHTML = html;
 
-    // Add click handlers
-    document.querySelectorAll('.order-card').forEach(card => {
-        card.addEventListener('click', () => {
-            const orderId = card.dataset.orderId;
-            loadOrderDetail(orderId);
-        });
+  // Add click handlers
+  document.querySelectorAll('.order-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const orderId = card.dataset.orderId;
+      loadOrderDetail(orderId);
     });
+  });
 }
 
 // Render Order Card
 function renderOrderCard(order) {
-    const categoryColor = CATEGORY_COLORS[order.category] || '#6B7280';
-    const statusColor = STATUS_COLORS[order.status] || '#6B7280';
-    const priorityClass = `priority-${order.priority}`;
-    const selectedClass = selectedOrderId === order.id ? 'selected' : '';
+  const categoryColor = CATEGORY_COLORS[order.category] || '#6B7280';
+  const statusColor = STATUS_COLORS[order.status] || '#6B7280';
+  const priorityClass = `priority-${order.priority}`;
+  const selectedClass = selectedOrderId === order.id ? 'selected' : '';
 
-    const lastActivity = order.lastMessageAt || order.updatedAt;
-    const lastActivityText = formatRelativeTime(lastActivity);
+  const lastActivity = order.lastMessageAt || order.updatedAt;
+  const lastActivityText = formatRelativeTime(lastActivity);
 
-    return `
+  return `
     <div class="order-card ${priorityClass} ${selectedClass}" 
          data-order-id="${order.id}"
          style="border-left-color: ${categoryColor}">
@@ -251,39 +251,39 @@ function renderOrderCard(order) {
 
 // Load Order Detail
 async function loadOrderDetail(orderId) {
-    try {
-        selectedOrderId = orderId;
+  try {
+    selectedOrderId = orderId;
 
-        // Update selected state in list
-        document.querySelectorAll('.order-card').forEach(card => {
-            card.classList.toggle('selected', card.dataset.orderId === orderId);
-        });
+    // Update selected state in list
+    document.querySelectorAll('.order-card').forEach(card => {
+      card.classList.toggle('selected', card.dataset.orderId === orderId);
+    });
 
-        const response = await fetch(`/api/orders/${orderId}`);
+    const response = await fetch(`/api/orders/${orderId}`);
 
-        if (!response.ok) {
-            throw new Error('Failed to load order');
-        }
-
-        const order = await response.json();
-        renderOrderDetail(order);
-
-        // Show detail panel
-        orderDetailPanel.style.display = 'block';
-        document.querySelector('.main-content').classList.add('split');
-
-    } catch (error) {
-        console.error('Error loading order detail:', error);
-        alert('Failed to load order details');
+    if (!response.ok) {
+      throw new Error('Failed to load order');
     }
+
+    const order = await response.json();
+    renderOrderDetail(order);
+
+    // Show detail panel
+    orderDetailPanel.style.display = 'block';
+    document.querySelector('.main-content').classList.add('split');
+
+  } catch (error) {
+    console.error('Error loading order detail:', error);
+    alert('Failed to load order details');
+  }
 }
 
 // Render Order Detail Panel
 function renderOrderDetail(order) {
-    const categoryColor = CATEGORY_COLORS[order.category] || '#6B7280';
-    const statusColor = STATUS_COLORS[order.status] || '#6B7280';
+  const categoryColor = CATEGORY_COLORS[order.category] || '#6B7280';
+  const statusColor = STATUS_COLORS[order.status] || '#6B7280';
 
-    const html = `
+  const html = `
     <div class="detail-section">
       <h3>Customer Information</h3>
       <div class="customer-info">
@@ -404,6 +404,87 @@ function renderOrderDetail(order) {
       </div>
     </div>
     
+    ${order.stripe ? `
+    <div class="detail-section">
+      <h3>💳 Stripe Payment Info</h3>
+      <div class="stripe-info">
+        ${order.stripe.paymentIntentId ? `
+        <div class="stripe-row">
+          <label>Payment Intent:</label>
+          <a href="https://dashboard.stripe.com/${process.env.STRIPE_MODE === 'live' ? '' : 'test/'}payments/${order.stripe.paymentIntentId}" 
+             target="_blank" 
+             class="stripe-link">
+            ${order.stripe.paymentIntentId}
+          </a>
+          <button class="btn btn-secondary copy-btn" onclick="copyToClipboard('${order.stripe.paymentIntentId}')">
+            Copy
+          </button>
+        </div>
+        ` : ''}
+        
+        ${order.stripe.checkoutSessionId ? `
+        <div class="stripe-row">
+          <label>Checkout Session:</label>
+          <a href="https://dashboard.stripe.com/${process.env.STRIPE_MODE === 'live' ? '' : 'test/'}checkout/sessions/${order.stripe.checkoutSessionId}" 
+             target="_blank" 
+             class="stripe-link">
+            ${order.stripe.checkoutSessionId.substring(0, 30)}...
+          </a>
+          <button class="btn btn-secondary copy-btn" onclick="copyToClipboard('${order.stripe.checkoutSessionId}')">
+            Copy
+          </button>
+        </div>
+        ` : ''}
+        
+        ${order.stripe.customerId ? `
+        <div class="stripe-row">
+          <label>Stripe Customer:</label>
+          <a href="https://dashboard.stripe.com/${process.env.STRIPE_MODE === 'live' ? '' : 'test/'}customers/${order.stripe.customerId}" 
+             target="_blank" 
+             class="stripe-link">
+            ${order.stripe.customerId}
+          </a>
+          <button class="btn btn-secondary copy-btn" onclick="copyToClipboard('${order.stripe.customerId}')">
+            Copy
+          </button>
+        </div>
+        ` : ''}
+        
+        ${order.stripe.status ? `
+        <div class="stripe-row">
+          <label>Payment Status:</label>
+          <span class="stripe-status status-${order.stripe.status}">
+            ${order.stripe.status}
+          </span>
+        </div>
+        ` : ''}
+        
+        ${order.stripe.amountTotal || order.stripe.amountCaptured ? `
+        <div class="stripe-row">
+          <label>Amount:</label>
+          <strong>$${(order.stripe.amountTotal || order.stripe.amountCaptured).toFixed(2)} ${(order.stripe.currency || 'usd').toUpperCase()}</strong>
+        </div>
+        ` : ''}
+        
+        ${order.stripe.refunded ? `
+        <div class="stripe-row">
+          <label>Refund:</label>
+          <span class="stripe-refund">
+            $${order.stripe.amountRefunded.toFixed(2)} refunded
+          </span>
+        </div>
+        ` : ''}
+        
+        ${order.stripe.lastUpdated ? `
+        <div class="stripe-row">
+          <label>Last Updated:</label>
+          <span>${formatDateTime(order.stripe.lastUpdated)}</span>
+        </div>
+        ` : ''}
+      </div>
+    </div>
+    ` : ''}
+    
     <div class="detail-section">
       <h3>Internal Notes</h3>
       <div class="detail-field">
@@ -424,295 +505,295 @@ function renderOrderDetail(order) {
     </div>
   `;
 
-    document.getElementById('orderDetailContent').innerHTML = html;
+  document.getElementById('orderDetailContent').innerHTML = html;
 }
 
 // Close Detail Panel
 function closeDetailPanel() {
-    orderDetailPanel.style.display = 'none';
-    document.querySelector('.main-content').classList.remove('split');
-    selectedOrderId = null;
+  orderDetailPanel.style.display = 'none';
+  document.querySelector('.main-content').classList.remove('split');
+  selectedOrderId = null;
 
-    // Remove selected state
-    document.querySelectorAll('.order-card').forEach(card => {
-        card.classList.remove('selected');
-    });
+  // Remove selected state
+  document.querySelectorAll('.order-card').forEach(card => {
+    card.classList.remove('selected');
+  });
 }
 
 // Update Order Field
 async function updateOrderField(orderId, field, value) {
-    try {
-        const response = await fetch(`/api/orders/${orderId}`, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ [field]: value })
-        });
+  try {
+    const response = await fetch(`/api/orders/${orderId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ [field]: value })
+    });
 
-        if (!response.ok) {
-            throw new Error('Failed to update order');
-        }
-
-        // Reload orders list and detail
-        await loadOrders();
-        await loadOrderDetail(orderId);
-
-    } catch (error) {
-        console.error('Error updating order:', error);
-        alert('Failed to update order');
+    if (!response.ok) {
+      throw new Error('Failed to update order');
     }
+
+    // Reload orders list and detail
+    await loadOrders();
+    await loadOrderDetail(orderId);
+
+  } catch (error) {
+    console.error('Error updating order:', error);
+    alert('Failed to update order');
+  }
 }
 
 // Quick Action
 async function quickAction(orderId, field, value) {
-    await updateOrderField(orderId, field, value);
+  await updateOrderField(orderId, field, value);
 }
 
 // Apply Filters
 function applyFilters() {
-    const filters = {};
+  const filters = {};
 
-    // Category
-    const categoryChecks = document.querySelectorAll('input[name="category"]:checked');
-    if (categoryChecks.length > 0) {
-        filters.category = Array.from(categoryChecks).map(cb => cb.value);
-    }
+  // Category
+  const categoryChecks = document.querySelectorAll('input[name="category"]:checked');
+  if (categoryChecks.length > 0) {
+    filters.category = Array.from(categoryChecks).map(cb => cb.value);
+  }
 
-    // Status
-    const statusChecks = document.querySelectorAll('input[name="status"]:checked');
-    if (statusChecks.length > 0) {
-        filters.status = Array.from(statusChecks).map(cb => cb.value);
-    }
+  // Status
+  const statusChecks = document.querySelectorAll('input[name="status"]:checked');
+  if (statusChecks.length > 0) {
+    filters.status = Array.from(statusChecks).map(cb => cb.value);
+  }
 
-    // Priority
-    const priorityChecks = document.querySelectorAll('input[name="priority"]:checked');
-    if (priorityChecks.length > 0) {
-        filters.priority = Array.from(priorityChecks).map(cb => cb.value);
-    }
+  // Priority
+  const priorityChecks = document.querySelectorAll('input[name="priority"]:checked');
+  if (priorityChecks.length > 0) {
+    filters.priority = Array.from(priorityChecks).map(cb => cb.value);
+  }
 
-    // Payment Status
-    const paymentChecks = document.querySelectorAll('input[name="paymentStatus"]:checked');
-    if (paymentChecks.length > 0) {
-        filters.paymentStatus = Array.from(paymentChecks).map(cb => cb.value);
-    }
+  // Payment Status
+  const paymentChecks = document.querySelectorAll('input[name="paymentStatus"]:checked');
+  if (paymentChecks.length > 0) {
+    filters.paymentStatus = Array.from(paymentChecks).map(cb => cb.value);
+  }
 
-    // Assigned To
-    const assignedTo = document.getElementById('assignedToFilter').value;
-    if (assignedTo) {
-        filters.assignedTo = assignedTo;
-    }
+  // Assigned To
+  const assignedTo = document.getElementById('assignedToFilter').value;
+  if (assignedTo) {
+    filters.assignedTo = assignedTo;
+  }
 
-    // Date Range
-    const dateFrom = document.getElementById('dateFrom').value;
-    const dateTo = document.getElementById('dateTo').value;
-    if (dateFrom) filters.dateFrom = dateFrom;
-    if (dateTo) filters.dateTo = dateTo;
+  // Date Range
+  const dateFrom = document.getElementById('dateFrom').value;
+  const dateTo = document.getElementById('dateTo').value;
+  if (dateFrom) filters.dateFrom = dateFrom;
+  if (dateTo) filters.dateTo = dateTo;
 
-    currentFilters = { ...currentFilters, ...filters };
-    loadOrders();
+  currentFilters = { ...currentFilters, ...filters };
+  loadOrders();
 }
 
 // Clear Filters
 function clearFilters() {
-    // Clear checkboxes
-    document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+  // Clear checkboxes
+  document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
 
-    // Clear selects and dates
-    document.getElementById('assignedToFilter').value = '';
-    document.getElementById('dateFrom').value = '';
-    document.getElementById('dateTo').value = '';
+  // Clear selects and dates
+  document.getElementById('assignedToFilter').value = '';
+  document.getElementById('dateFrom').value = '';
+  document.getElementById('dateTo').value = '';
 
-    // Reset filters
-    currentFilters = {};
-    searchInput.value = '';
+  // Reset filters
+  currentFilters = {};
+  searchInput.value = '';
 
-    loadOrders();
+  loadOrders();
 }
 
 // Update Filter Count
 function updateFilterCount() {
-    let count = 0;
+  let count = 0;
 
-    if (currentFilters.category) count += currentFilters.category.length;
-    if (currentFilters.status) count += currentFilters.status.length;
-    if (currentFilters.priority) count += currentFilters.priority.length;
-    if (currentFilters.paymentStatus) count += currentFilters.paymentStatus.length;
-    if (currentFilters.assignedTo) count += 1;
-    if (currentFilters.dateFrom || currentFilters.dateTo) count += 1;
+  if (currentFilters.category) count += currentFilters.category.length;
+  if (currentFilters.status) count += currentFilters.status.length;
+  if (currentFilters.priority) count += currentFilters.priority.length;
+  if (currentFilters.paymentStatus) count += currentFilters.paymentStatus.length;
+  if (currentFilters.assignedTo) count += 1;
+  if (currentFilters.dateFrom || currentFilters.dateTo) count += 1;
 
-    if (count > 0) {
-        filterCountBadge.textContent = count;
-        filterCountBadge.style.display = 'inline-block';
-    } else {
-        filterCountBadge.style.display = 'none';
-    }
+  if (count > 0) {
+    filterCountBadge.textContent = count;
+    filterCountBadge.style.display = 'inline-block';
+  } else {
+    filterCountBadge.style.display = 'none';
+  }
 }
 
 // Open Email Modal
 function openEmailModal(orderId, email, name, subject, amount) {
-    document.getElementById('emailTo').value = email;
-    document.getElementById('emailSubject').value = '';
-    document.getElementById('emailBody').value = '';
-    emailModal.dataset.orderId = orderId;
-    emailModal.dataset.customerName = name;
-    emailModal.dataset.orderSubject = subject;
-    emailModal.dataset.amount = amount;
-    emailModal.style.display = 'flex';
+  document.getElementById('emailTo').value = email;
+  document.getElementById('emailSubject').value = '';
+  document.getElementById('emailBody').value = '';
+  emailModal.dataset.orderId = orderId;
+  emailModal.dataset.customerName = name;
+  emailModal.dataset.orderSubject = subject;
+  emailModal.dataset.amount = amount;
+  emailModal.style.display = 'flex';
 }
 
 // Apply Email Template
 function applyEmailTemplate(template) {
-    if (template === 'custom') return;
+  if (template === 'custom') return;
 
-    const tmpl = EMAIL_TEMPLATES[template];
-    const customerName = emailModal.dataset.customerName;
-    const orderSubject = emailModal.dataset.orderSubject;
-    const amount = emailModal.dataset.amount;
+  const tmpl = EMAIL_TEMPLATES[template];
+  const customerName = emailModal.dataset.customerName;
+  const orderSubject = emailModal.dataset.orderSubject;
+  const amount = emailModal.dataset.amount;
 
-    let subject = tmpl.subject;
-    let body = tmpl.body;
+  let subject = tmpl.subject;
+  let body = tmpl.body;
 
-    body = body.replace('[Customer Name]', customerName);
-    body = body.replace('[Order Subject]', orderSubject);
-    body = body.replace('[Amount]', amount);
+  body = body.replace('[Customer Name]', customerName);
+  body = body.replace('[Order Subject]', orderSubject);
+  body = body.replace('[Amount]', amount);
 
-    document.getElementById('emailSubject').value = subject;
-    document.getElementById('emailBody').value = body;
+  document.getElementById('emailSubject').value = subject;
+  document.getElementById('emailBody').value = body;
 }
 
 // Send Email
 async function sendEmail() {
-    const orderId = emailModal.dataset.orderId;
-    const subject = document.getElementById('emailSubject').value;
-    const body = document.getElementById('emailBody').value;
+  const orderId = emailModal.dataset.orderId;
+  const subject = document.getElementById('emailSubject').value;
+  const body = document.getElementById('emailBody').value;
 
-    if (!subject || !body) {
-        alert('Please fill in subject and message');
-        return;
+  if (!subject || !body) {
+    alert('Please fill in subject and message');
+    return;
+  }
+
+  try {
+    const response = await fetch(`/api/orders/${orderId}/message`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ subject, body })
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to send email');
     }
 
-    try {
-        const response = await fetch(`/api/orders/${orderId}/message`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ subject, body })
-        });
+    emailModal.style.display = 'none';
+    alert('Email logged successfully');
 
-        if (!response.ok) {
-            throw new Error('Failed to send email');
-        }
+    // Reload order detail
+    await loadOrderDetail(orderId);
 
-        emailModal.style.display = 'none';
-        alert('Email logged successfully');
-
-        // Reload order detail
-        await loadOrderDetail(orderId);
-
-    } catch (error) {
-        console.error('Error sending email:', error);
-        alert('Failed to send email');
-    }
+  } catch (error) {
+    console.error('Error sending email:', error);
+    alert('Failed to send email');
+  }
 }
 
 // Export to CSV
 function exportToCSV() {
-    if (allOrders.length === 0) {
-        alert('No orders to export');
-        return;
-    }
+  if (allOrders.length === 0) {
+    alert('No orders to export');
+    return;
+  }
 
-    const headers = ['ID', 'Created', 'Customer', 'Email', 'Category', 'Status', 'Priority', 'Subject', 'Payment Status', 'Amount', 'Due Date'];
+  const headers = ['ID', 'Created', 'Customer', 'Email', 'Category', 'Status', 'Priority', 'Subject', 'Payment Status', 'Amount', 'Due Date'];
 
-    const rows = allOrders.map(order => [
-        order.id,
-        formatDateTime(order.createdAt),
-        order.customer.name,
-        order.customer.email,
-        order.category,
-        order.status,
-        order.priority,
-        order.subject,
-        order.paymentStatus,
-        order.amount || '',
-        order.dueDate || ''
-    ]);
+  const rows = allOrders.map(order => [
+    order.id,
+    formatDateTime(order.createdAt),
+    order.customer.name,
+    order.customer.email,
+    order.category,
+    order.status,
+    order.priority,
+    order.subject,
+    order.paymentStatus,
+    order.amount || '',
+    order.dueDate || ''
+  ]);
 
-    const csv = [headers, ...rows]
-        .map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(','))
-        .join('\n');
+  const csv = [headers, ...rows]
+    .map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(','))
+    .join('\n');
 
-    const blob = new Blob([csv], { type: 'text/csv' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `corazintel-orders-${new Date().toISOString().split('T')[0]}.csv`;
-    a.click();
-    URL.revokeObjectURL(url);
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `corazintel-orders-${new Date().toISOString().split('T')[0]}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
 }
 
 // Utility Functions
 function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
 }
 
 function formatDate(dateStr) {
-    const date = new Date(dateStr);
-    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  const date = new Date(dateStr);
+  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }
 
 function formatDateTime(dateStr) {
-    const date = new Date(dateStr);
-    return date.toLocaleString('en-US', {
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric',
-        hour: 'numeric',
-        minute: '2-digit'
-    });
+  const date = new Date(dateStr);
+  return date.toLocaleString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit'
+  });
 }
 
 function formatRelativeTime(dateStr) {
-    const date = new Date(dateStr);
-    const now = new Date();
-    const diff = now - date;
-    const minutes = Math.floor(diff / 60000);
-    const hours = Math.floor(minutes / 60);
-    const days = Math.floor(hours / 24);
+  const date = new Date(dateStr);
+  const now = new Date();
+  const diff = now - date;
+  const minutes = Math.floor(diff / 60000);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
 
-    if (minutes < 1) return 'just now';
-    if (minutes < 60) return `${minutes}m ago`;
-    if (hours < 24) return `${hours}h ago`;
-    if (days < 7) return `${days}d ago`;
-    return formatDate(dateStr);
+  if (minutes < 1) return 'just now';
+  if (minutes < 60) return `${minutes}m ago`;
+  if (hours < 24) return `${hours}h ago`;
+  if (days < 7) return `${days}d ago`;
+  return formatDate(dateStr);
 }
 
 function copyToClipboard(text) {
-    navigator.clipboard.writeText(text).then(() => {
-        alert('Copied to clipboard!');
-    });
+  navigator.clipboard.writeText(text).then(() => {
+    alert('Copied to clipboard!');
+  });
 }
 
 // Seed Test Data (for development)
 async function seedTestData(count = 20) {
-    try {
-        const response = await fetch('/api/orders/seed', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ count })
-        });
+  try {
+    const response = await fetch('/api/orders/seed', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ count })
+    });
 
-        if (!response.ok) {
-            throw new Error('Failed to seed data');
-        }
-
-        alert(`Created ${count} test orders!`);
-        loadOrders();
-
-    } catch (error) {
-        console.error('Error seeding data:', error);
-        alert('Failed to seed test data');
+    if (!response.ok) {
+      throw new Error('Failed to seed data');
     }
+
+    alert(`Created ${count} test orders!`);
+    loadOrders();
+
+  } catch (error) {
+    console.error('Error seeding data:', error);
+    alert('Failed to seed test data');
+  }
 }
 
 // Make seedTestData available globally for console access

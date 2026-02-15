@@ -203,6 +203,65 @@ function generateId() {
     return 'ORD-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
 }
 
+/**
+ * Find order by Stripe Payment Intent ID
+ * @param {string} paymentIntentId - Stripe Payment Intent ID
+ * @returns {Promise<Object|null>} Order object or null if not found
+ */
+async function getOrderByStripePaymentIntent(paymentIntentId) {
+    const orders = await readOrders();
+    return orders.find(order => order.stripe?.paymentIntentId === paymentIntentId) || null;
+}
+
+/**
+ * Find order by Stripe Checkout Session ID
+ * @param {string} sessionId - Stripe Checkout Session ID
+ * @returns {Promise<Object|null>} Order object or null if not found
+ */
+async function getOrderByStripeSession(sessionId) {
+    const orders = await readOrders();
+    return orders.find(order => order.stripe?.checkoutSessionId === sessionId) || null;
+}
+
+/**
+ * Find orders by Stripe Customer ID
+ * @param {string} customerId - Stripe Customer ID
+ * @returns {Promise<Array>} Array of orders for this customer
+ */
+async function getOrdersByStripeCustomer(customerId) {
+    const orders = await readOrders();
+    return orders.filter(order => order.stripe?.customerId === customerId);
+}
+
+/**
+ * Update order with Stripe payment information
+ * @param {string} orderId - Order ID
+ * @param {Object} stripeData - Stripe payment data
+ * @returns {Promise<Object|null>} Updated order or null if not found
+ */
+async function updateOrderStripeData(orderId, stripeData) {
+    const orders = await readOrders();
+    const index = orders.findIndex(order => order.id === orderId);
+
+    if (index === -1) {
+        return null;
+    }
+
+    orders[index].stripe = {
+        ...orders[index].stripe,
+        ...stripeData,
+        lastUpdated: new Date().toISOString()
+    };
+    orders[index].updatedAt = new Date().toISOString();
+
+    await writeOrders(orders);
+
+    // Log activity
+    await addActivityLog(orderId, 'stripe_update', `Stripe payment updated: ${stripeData.status || 'info updated'}`);
+
+    return orders[index];
+}
+
 module.exports = {
     readOrders,
     writeOrders,
@@ -211,5 +270,9 @@ module.exports = {
     updateOrder,
     addActivityLog,
     filterOrders,
-    generateId
+    generateId,
+    getOrderByStripePaymentIntent,
+    getOrderByStripeSession,
+    getOrdersByStripeCustomer,
+    updateOrderStripeData
 };

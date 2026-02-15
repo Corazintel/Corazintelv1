@@ -59,6 +59,10 @@ app.use(async (req, res, next) => {
 // Routes
 const adminRouter = require('./src/routes/admin');
 const ordersRouter = require('./src/routes/orders');
+const stripeRouter = require('./src/routes/stripe');
+
+// Stripe webhook must be before express.json() middleware
+app.use('/webhooks/stripe', stripeRouter);
 
 app.use('/', adminRouter);
 app.use('/', ordersRouter);
