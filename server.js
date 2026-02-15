@@ -18,6 +18,9 @@ app.set('layout', 'layout');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Trust Render's proxy for secure cookies
+app.set('trust proxy', 1);
+
 app.use(session({
   name: 'corazintel.sid',
   secret: process.env.SESSION_SECRET || 'dev-only-change-me',
@@ -26,7 +29,8 @@ app.use(session({
   cookie: {
     httpOnly: true,
     sameSite: 'lax',
-    secure: process.env.NODE_ENV === 'production'
+    secure: process.env.NODE_ENV === 'production',
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
   }
 }));
 

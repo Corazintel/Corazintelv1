@@ -49,17 +49,30 @@ router.post('/admin/login', async (req, res) => {
   const expectedUser = getAdminUser();
   const expectedPass = process.env.ADMIN_PASSWORD || '1125';
 
+  console.log('Login attempt:', {
+    providedUser: user,
+    expectedUser: expectedUser,
+    userMatch: user === expectedUser,
+    hasPassword: !!pass,
+    hasSessionSecret: !!process.env.SESSION_SECRET
+  });
+
   if (user !== expectedUser) {
+    console.log('Login failed: Username mismatch');
     return res.status(401).render('admin/login', { title: 'Admin Login', error: 'Wrong login.' });
   }
 
   const ok = await verifyPassword(pass, expectedPass);
   if (!ok) {
+    console.log('Login failed: Password mismatch');
     return res.status(401).render('admin/login', { title: 'Admin Login', error: 'Wrong login.' });
   }
 
   req.session.isAdmin = true;
   req.session.adminUser = expectedUser;
+
+  console.log('Login successful, redirecting to /admin');
+
   return res.redirect('/admin');
 });
 
