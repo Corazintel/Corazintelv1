@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmed - <%= brand.name %>
+    </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563EB;
+            --success: #10B981;
+            --text: #111827;
+            --text-light: #6B7280;
+            --bg: #F9FAFB;
+            --white: #FFFFFF;
+            --border: #E5E7EB;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .confirmation-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 48px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--success);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            animation: scaleIn 0.5s ease;
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+            }
+
+            to {
+                transform: scale(1);
+            }
+        }
+
+        .success-icon svg {
+            width: 48px;
+            height: 48px;
+            color: white;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text);
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: var(--text-light);
+            margin-bottom: 32px;
+        }
+
+        .order-id-box {
+            background: var(--bg);
+            border: 2px dashed var(--border);
+            border-radius: 8px;
+            padding: 24px;
+            margin: 32px 0;
+        }
+
+        .order-id-label {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .order-id {
+            font-size: 24px;
+            font-weight: 700;
+            font-family: monospace;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .copy-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: #1D4ED8;
+            transform: translateY(-1px);
+        }
+
+        .next-steps {
+            text-align: left;
+            margin-top: 40px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border);
+        }
+
+        .next-steps h2 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .step {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .step-content h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .step-content p {
+            font-size: 14px;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
+        .info-box {
+            background: #EFF6FF;
+            border-left: 4px solid var(--primary);
+            padding: 16px 20px;
+            margin-top: 32px;
+            border-radius: 4px;
+        }
+
+        .info-box h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+
+        .info-box p {
+            font-size: 14px;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+
+        .info-box a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .info-box a:hover {
+            text-decoration: underline;
+        }
+
+        .summary {
+            text-align: left;
+            margin-top: 32px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border);
+        }
+
+        .summary h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .summary-label {
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        .summary-value {
+            font-weight: 500;
+            font-size: 14px;
+            text-align: right;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 24px;
+            transition: all 0.2s;
+        }
+
+        .btn:hover {
+            background: #1D4ED8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .confirmation-card {
+                padding: 32px 24px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .order-id {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="confirmation-card">
+            <div class="success-icon">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+
+            <h1>Order Submitted Successfully!</h1>
+            <p class="subtitle">Thank you for choosing <%= brand.name %>. We've received your order and will review it
+                    shortly.</p>
+
+            <div class="order-id-box">
+                <div class="order-id-label">Your Order ID</div>
+                <div class="order-id" id="orderId">
+                    <%= order.id %>
+                </div>
+                <button class="copy-btn">📋 Copy Order ID</button>
+            </div>
+
+            <div class="summary">
+                <h2>Order Summary</h2>
+                <div class="summary-item">
+                    <span class="summary-label">Service:</span>
+                    <span class="summary-value">
+                        <%= order.category %>
+                    </span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Subject:</span>
+                    <span class="summary-value">
+                        <%= order.subject %>
+                    </span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Priority:</span>
+                    <span class="summary-value">
+                        <%= order.priority %>
+                    </span>
+                </div>
+                <% if (order.amount) { %>
+                    <div class="summary-item">
+                        <span class="summary-label">Amount:</span>
+                        <span class="summary-value">$<%= order.amount.toFixed(2) %></span>
+                    </div>
+                    <% } %>
+                        <div class="summary-item">
+                            <span class="summary-label">Status:</span>
+                            <span class="summary-value">
+                                <%= order.paymentStatus %>
+                            </span>
+                        </div>
+            </div>
+
+            <div class="next-steps">
+                <h2>What Happens Next?</h2>
+
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Order Review</h3>
+                        <p>Our team will review your order within 24 hours and may reach out if we need additional
+                            information.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Payment Processing</h3>
+                        <p>If not yet paid, you'll receive a secure payment link via email. Work begins after payment is
+                            confirmed.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>We Get to Work</h3>
+                        <p>Once everything is confirmed, we'll start working on your order according to your selected
+                            timeline.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Delivery & Review</h3>
+                        <p>You'll receive your completed work for review, with revisions available per our policy.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h3>📧 Check Your Email</h3>
+                <p>A confirmation email has been sent to <strong>
+                        <%= order.customer.email %>
+                    </strong> with your order details and next steps.</p>
+                <p>Questions? Contact us at <a href="mailto:support@corazintel.com">support@corazintel.com</a> or
+                    reference Order ID: <%= order.id %>
+                </p>
+            </div>
+
+            <a href="/" class="btn">← Back to Homepage</a>
+        </div>
+    </div>
+
+    <script>
+        document.querySelector('.copy-btn').addEventListener('click', () => {
+            const orderId = document.getElementById('orderId').textContent;
+            navigator.clipboard.writeText(orderId).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                const originalText = btn.textContent;
+                btn.textContent = '✓ Copied!';
+                btn.style.background = '#10B981';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '';
+                }, 2000);
+            });
+        });
+    </script>
+</body>
+
+</html>

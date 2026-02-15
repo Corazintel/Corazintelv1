@@ -64,12 +64,34 @@ app.use(async (req, res, next) => {
 const adminRouter = require('./src/routes/admin');
 const ordersRouter = require('./src/routes/orders');
 const stripeRouter = require('./src/routes/stripe');
+const intakeRouter = require('./src/routes/intake');
 
 // Stripe webhook must be before express.json() middleware
 app.use('/webhooks/stripe', stripeRouter);
 
 app.use('/', adminRouter);
 app.use('/', ordersRouter);
+app.use('/', intakeRouter);
+
+// Order confirmation page
+const { getOrderById } = require('./src/services/orderStore');
+
+app.get('/order-confirmation/:orderId', async (req, res) => {
+  try {
+    const order = await getOrderById(req.params.orderId);
+    if (!order) {
+      return res.status(404).send('Order not found');
+    }
+    res.render('order-confirmation', {
+      title: 'Order Confirmed',
+      order,
+      brand: res.locals.brand
+    });
+  } catch (error) {
+    console.error('Error loading confirmation:', error);
+    res.status(500).send('Error loading confirmation page');
+  }
+});
 
 // Admin Orders Page route
 function requireAdmin(req, res, next) {

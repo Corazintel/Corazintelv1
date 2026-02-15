@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Intake - <%= brand.name %>
+    </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/order-intake.css">
+</head>
+
+<body>
+    <div class="intake-container">
+        <!-- Progress Indicator -->
+        <div class="progress-wrapper">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="step-indicators" id="stepIndicators">
+                <div class="step-indicator active" data-step="1">
+                    <span class="step-number">1</span>
+                    <span class="step-label">Service</span>
+                </div>
+                <div class="step-indicator" data-step="2">
+                    <span class="step-number">2</span>
+                    <span class="step-label">Contact</span>
+                </div>
+                <div class="step-indicator" data-step="3">
+                    <span class="step-number">3</span>
+                    <span class="step-label">Details</span>
+                </div>
+                <div class="step-indicator" data-step="4">
+                    <span class="step-number">4</span>
+                    <span class="step-label">Review</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Container -->
+        <div class="form-container">
+            <form id="intakeForm">
+
+                <!-- Step 1: Service Selection -->
+                <div class="form-step active" data-step="1">
+                    <h1>Let's Get Started</h1>
+                    <p class="step-description">Tell us what service you need</p>
+
+                    <div class="form-group">
+                        <label for="service">Service Category *</label>
+                        <select id="service" name="service" required>
+                            <option value="">Select a service...</option>
+                            <option value="tech">Tech (Web/Software)</option>
+                            <option value="documents">Documents</option>
+                            <option value="credit">Credit Repair</option>
+                            <option value="computer">Computer Repair</option>
+                            <option value="wig">Beauty – Wig</option>
+                            <option value="contouring">Beauty – Body Contouring</option>
+                            <option value="facials">Beauty – Facials</option>
+                        </select>
+                        <span class="error-message"></span>
+                    </div>
+
+                    <div class="form-group" id="packageGroup" style="display: none;">
+                        <label for="package">Service Package *</label>
+                        <select id="package" name="package" required>
+                            <option value="">Select a package...</option>
+                        </select>
+                        <span class="package-price"></span>
+                        <span class="error-message"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject">Order Title/Summary *</label>
+                        <input type="text" id="subject" name="subject" placeholder="Brief summary of what you need"
+                            required maxlength="200">
+                        <span class="error-message"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="priority">Urgency *</label>
+                        <select id="priority" name="priority" required>
+                            <option value="P3">Standard (5-7 business days)</option>
+                            <option value="P2">Priority (2-3 business days) +20%</option>
+                            <option value="P1">Urgent (24-48 hours) +50%</option>
+                            <option value="P0">Rush (Same day/Next day) +100%</option>
+                        </select>
+                        <span class="error-message"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dueDate">Preferred Completion Date</label>
+                        <input type="date" id="dueDate" name="dueDate"
+                            min="<%= new Date().toISOString().split('T')[0] %>">
+                        <span class="error-message"></span>
+                    </div>
+                </div>
+
+                <!-- Step 2: Customer Information -->
+                <div class="form-step" data-step="2">
+                    <h1>Your Information</h1>
+                    <p class="step-description">How can we reach you?</p>
+
+                    <div class="form-group">
+                        <label for="customerName">Full Name *</label>
+                        <input type="text" id="customerName" name="customerName" required maxlength="100">
+                        <span class="error-message"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="customerEmail">Email Address *</label>
+                        <input type="email" id="customerEmail" name="customerEmail" required maxlength="100">
+                        <span class="error-message"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="customerPhone">Phone Number *</label>
+                        <input type="tel" id="customerPhone" name="customerPhone" required placeholder="(555) 123-4567"
+                            maxlength="20">
+                        <span class="error-message"></span>
+                    </div>
+                </div>
+
+                <!-- Step 3: Service-Specific Questions -->
+                <div class="form-step" data-step="3">
+                    <h1>Service Details</h1>
+                    <p class="step-description" id="serviceDetailsDesc">Tell us more about your needs</p>
+
+                    <!-- Dynamic service questions will be injected here -->
+                    <div id="serviceQuestions"></div>
+                </div>
+
+                <!-- Step 4: Review & Sign -->
+                <div class="form-step" data-step="4">
+                    <h1>Review & Sign</h1>
+                    <p class="step-description">Review your order and provide your signature</p>
+
+                    <div class="review-summary" id="reviewSummary"></div>
+
+                    <div class="signature-section">
+                        <h3>Electronic Signature</h3>
+
+                        <div class="form-group">
+                            <label for="signatureName">Type Your Full Name *</label>
+                            <input type="text" id="signatureName" name="signatureName" required maxlength="100">
+                            <span class="error-message"></span>
+                        </div>
+
+                        <div class="signature-pad-wrapper">
+                            <label>Draw Your Signature *</label>
+                            <canvas id="signaturePad" width="600" height="200"></canvas>
+                            <button type="button" class="btn-clear-signature" id="clearSignature">Clear
+                                Signature</button>
+                            <span class="error-message" id="signatureError"></span>
+                        </div>
+
+                        <div class="form-group checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="consentElectronic" name="consentElectronic" required>
+                                <span>I consent to using electronic signatures for this transaction *</span>
+                            </label>
+                            <span class="error-message"></span>
+                        </div>
+                    </div>
+
+                    <div class="policies-section">
+                        <h3>Terms & Policies</h3>
+                        <p class="policies-intro">Please read and acknowledge the following:</p>
+
+                        <div class="form-group checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="policyAccuracy" name="policyAccuracy" required>
+                                <span>I confirm that all information provided is accurate and complete *</span>
+                            </label>
+                        </div>
+
+                        <div class="form-group checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="policyResponse" name="policyResponse" required>
+                                <span>I understand I must respond to requests for additional information within 48 hours
+                                    *</span>
+                            </label>
+                        </div>
+
+                        <div class="form-group checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="policyPayment" name="policyPayment" required>
+                                <span>I understand work begins only after payment is received and intake is complete
+                                    *</span>
+                            </label>
+                        </div>
+
+                        <div class="form-group checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="policyRefund" name="policyRefund" required>
+                                <span>I understand there are no refunds after delivery or completion of work *</span>
+                            </label>
+                        </div>
+
+                        <div class="form-group checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="policyRevisions" name="policyRevisions" required>
+                                <span>I understand revisions are subject to our revision policy and may incur additional
+                                    fees *</span>
+                            </label>
+                        </div>
+
+                        <div class="form-group checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="policySupport" name="policySupport" required>
+                                <span>I agree to contact support before initiating any chargeback or dispute *</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <div class="form-navigation">
+                    <button type="button" class="btn btn-secondary" id="prevBtn" style="display: none;">
+                        ← Back
+                    </button>
+                    <button type="button" class="btn btn-primary" id="nextBtn">
+                        Next →
+                    </button>
+                    <button type="submit" class="btn btn-primary" id="submitBtn" style="display: none;">
+                        <span class="btn-text">Submit Order</span>
+                        <span class="btn-loading" style="display: none;">
+                            <span class="spinner"></span> Submitting...
+                        </span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/js/order-intake.js"></script>
+</body>
+
+</html>
