@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title><%= typeof title !== 'undefined' ? title : 'Corazintel' %></title>
+  <title>
+    <%= typeof title !=='undefined' ? title : 'Corazintel' %>
+  </title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -16,17 +19,30 @@
       },
     };
   </script>
-  <style>
-    .input { @apply w-full rounded-xl border border-slate-700 bg-slate-800/50 px-4 py-3 text-white placeholder-slate-500 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500; }
-    .btn { @apply inline-flex items-center justify-center rounded-xl px-5 py-2.5 font-semibold transition; }
-    .btn-primary { @apply bg-emerald-600 text-white hover:bg-emerald-500; }
-    .btn-ghost { @apply text-slate-300 hover:text-white hover:bg-slate-800; }
+  <style type="text/tailwindcss">
+    .input {
+      @apply w-full rounded-xl border border-slate-700 bg-slate-800/50 px-4 py-3 text-white placeholder-slate-500 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500;
+    }
+
+    .btn {
+      @apply inline-flex items-center justify-center rounded-xl px-5 py-2.5 font-semibold transition;
+    }
+
+    .btn-primary {
+      @apply bg-emerald-600 text-white hover:bg-emerald-500;
+    }
+
+    .btn-ghost {
+      @apply text-slate-300 hover:text-white hover:bg-slate-800;
+    }
   </style>
 </head>
+
 <body class="bg-slate-950 text-slate-200 min-h-screen">
   <%- include('partials/nav') %>
-  <main>
-    <%- body %>
-  </main>
+    <main>
+      <%- body %>
+    </main>
 </body>
+
 </html>
