@@ -3,13 +3,38 @@
 const fs = require('fs').promises;
 const path = require('path');
 
-const ORDERS_PATH = path.join(__dirname, '..', 'data', 'orders.json');
+const DATA_DIR = path.join(__dirname, '..', 'data');
+const ORDERS_PATH = path.join(DATA_DIR, 'orders.json');
+
+/**
+ * Ensure data directory and orders.json exist
+ * @returns {Promise<void>}
+ */
+async function ensureDataExists() {
+    try {
+        // Create data directory if it doesn't exist
+        await fs.mkdir(DATA_DIR, { recursive: true });
+
+        // Check if orders.json exists
+        try {
+            await fs.access(ORDERS_PATH);
+        } catch (error) {
+            // File doesn't exist, create it with empty array
+            await fs.writeFile(ORDERS_PATH, JSON.stringify([], null, 2), 'utf8');
+            console.log('Created orders.json file');
+        }
+    } catch (error) {
+        console.error('Error ensuring data exists:', error);
+    }
+}
 
 /**
  * Read all orders from orders.json
  * @returns {Promise<Array>} Array of order objects
  */
 async function readOrders() {
+    await ensureDataExists();
+
     try {
         const data = await fs.readFile(ORDERS_PATH, 'utf8');
         return JSON.parse(data);
@@ -28,6 +53,7 @@ async function readOrders() {
  * @returns {Promise<void>}
  */
 async function writeOrders(orders) {
+    await ensureDataExists();
     await fs.writeFile(ORDERS_PATH, JSON.stringify(orders, null, 2), 'utf8');
 }
 
