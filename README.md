@@ -28,3 +28,4 @@ npm start
 ## Content
 
 Editable content lives in `src/data/content.json`. Changes made in the admin dashboard are written there (atomic write). The homepage hero, categories, testimonials, FAQ, footer, contact, and social links all read from this file.
+# Corazintelv1
