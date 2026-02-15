@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orders - Corazintel Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/orders.css">
+</head>
+<body>
+  <!-- Top Bar -->
+  <header class="top-bar">
+    <div class="top-bar-left">
+      <h1>Orders</h1>
+      <div class="search-container">
+        <input 
+          type="search" 
+          id="searchInput" 
+          class="search-input" 
+          placeholder="Search by name, email, ID, or subject..."
+          aria-label="Search orders"
+        >
+      </div>
+    </div>
+    <div class="top-bar-right">
+      <button class="btn btn-secondary" id="filterBtn" aria-label="Open filters">
+        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
+        </svg>
+        Filters
+        <span class="filter-count" id="filterCount" style="display: none;"></span>
+      </button>
+      <button class="btn btn-secondary" id="exportBtn">
+        Export CSV
+      </button>
+      <button class="btn btn-primary" id="newOrderBtn">
+        + New Manual Order
+      </button>
+      <a href="/admin" class="btn btn-secondary">Back to Admin</a>
+      <form action="/admin/logout" method="POST" style="display: inline;">
+        <button type="submit" class="btn btn-secondary">Logout</button>
+      </form>
+    </div>
+  </header>
+
+  <!-- Filter Panel (Hidden by default) -->
+  <aside class="filter-panel" id="filterPanel" style="display: none;">
+    <div class="filter-header">
+      <h2>Filters</h2>
+      <button class="btn-close" id="closeFilters" aria-label="Close filters">×</button>
+    </div>
+    
+    <div class="filter-body">
+      <div class="filter-group">
+        <label>Category</label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" name="category" value="Beauty"> Beauty</label>
+          <label><input type="checkbox" name="category" value="Credit Services"> Credit Services</label>
+          <label><input type="checkbox" name="category" value="Web Development"> Web Development</label>
+          <label><input type="checkbox" name="category" value="Graphic Design"> Graphic Design</label>
+          <label><input type="checkbox" name="category" value="Document Creation"> Document Creation</label>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <label>Status</label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" name="status" value="New"> New</label>
+          <label><input type="checkbox" name="status" value="In Progress"> In Progress</label>
+          <label><input type="checkbox" name="status" value="Waiting on Client"> Waiting on Client</label>
+          <label><input type="checkbox" name="status" value="Completed"> Completed</label>
+          <label><input type="checkbox" name="status" value="Cancelled"> Cancelled</label>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <label>Priority</label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" name="priority" value="P0"> P0 (Urgent)</label>
+          <label><input type="checkbox" name="priority" value="P1"> P1 (High)</label>
+          <label><input type="checkbox" name="priority" value="P2"> P2 (Normal)</label>
+          <label><input type="checkbox" name="priority" value="P3"> P3 (Low)</label>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <label>Payment Status</label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" name="paymentStatus" value="Unpaid"> Unpaid</label>
+          <label><input type="checkbox" name="paymentStatus" value="Deposit Paid"> Deposit Paid</label>
+          <label><input type="checkbox" name="paymentStatus" value="Paid"> Paid</label>
+          <label><input type="checkbox" name="paymentStatus" value="Refunded"> Refunded</label>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <label for="assignedToFilter">Assigned To</label>
+        <select id="assignedToFilter" name="assignedTo">
+          <option value="">All</option>
+          <option value="Sarah">Sarah</option>
+          <option value="Mike">Mike</option>
+          <option value="Alex">Alex</option>
+          <option value="Jordan">Jordan</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="dateFrom">Date Range</label>
+        <div class="date-range">
+          <input type="date" id="dateFrom" name="dateFrom">
+          <span>to</span>
+          <input type="date" id="dateTo" name="dateTo">
+        </div>
+      </div>
+    </div>
+
+    <div class="filter-footer">
+      <button class="btn btn-secondary" id="clearFilters">Clear All</button>
+      <button class="btn btn-primary" id="applyFilters">Apply Filters</button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Orders List -->
+    <section class="orders-list" id="ordersList">
+      <div class="loading" id="loadingOrders">
+        <div class="spinner"></div>
+        <p>Loading orders...</p>
+      </div>
+      <div class="error" id="errorOrders" style="display: none;">
+        <p>Failed to load orders. Please try again.</p>
+      </div>
+      <div class="empty-state" id="emptyState" style="display: none;">
+        <p>No orders found. Try adjusting your filters or create a new order.</p>
+      </div>
+      <!-- Orders will be inserted here by JavaScript -->
+    </section>
+
+    <!-- Order Detail Panel -->
+    <aside class="order-detail-panel" id="orderDetailPanel" style="display: none;">
+      <div class="detail-header">
+        <button class="btn-close" id="closeDetail" aria-label="Close detail panel">×</button>
+      </div>
+      <div class="detail-content" id="orderDetailContent">
+        <!-- Order details will be loaded here -->
+      </div>
+    </aside>
+  </main>
+
+  <!-- Email Modal -->
+  <div class="modal" id="emailModal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Send Email</h2>
+        <button class="btn-close" id="closeEmailModal">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="emailTo">To</label>
+          <input type="email" id="emailTo" readonly>
+        </div>
+        <div class="form-group">
+          <label for="emailTemplate">Template</label>
+          <select id="emailTemplate">
+            <option value="custom">Custom</option>
+            <option value="request_info">Request Info</option>
+            <option value="payment_reminder">Payment Reminder</option>
+            <option value="ready_review">Ready for Review</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="emailSubject">Subject</label>
+          <input type="text" id="emailSubject" placeholder="Email subject">
+        </div>
+        <div class="form-group">
+          <label for="emailBody">Message</label>
+          <textarea id="emailBody" rows="8" placeholder="Email message"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancelEmail">Cancel</button>
+        <button class="btn btn-primary" id="sendEmail">Send Email</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/orders.js"></script>
+</body>
+</html>
