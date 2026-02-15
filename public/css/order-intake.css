@@ -251,6 +251,7 @@ body {
 .checkbox-label span {
     font-size: 14px;
     line-height: 1.5;
+    color: var(--text);
 }
 
 /* File Upload */

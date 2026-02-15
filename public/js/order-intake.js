@@ -122,10 +122,12 @@
 
     if (service) {
       packageGroup.style.display = 'block';
+      packageSelect.setAttribute('required', 'required'); // Make required when visible
       loadPackagesForService(service);
       loadServiceQuestions(service);
     } else {
       packageGroup.style.display = 'none';
+      packageSelect.removeAttribute('required'); // Remove required when hidden
       serviceQuestionsContainer.innerHTML = '';
     }
   }
