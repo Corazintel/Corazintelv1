@@ -35,6 +35,9 @@ app.use((req, res, next) => {
   next();
 });
 
+// Serve static files (CSS, JS, images)
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(async (req, res, next) => {
   let content = null;
   try {
@@ -53,8 +56,22 @@ app.use(async (req, res, next) => {
   next();
 });
 
+// Routes
 const adminRouter = require('./src/routes/admin');
+const ordersRouter = require('./src/routes/orders');
+
 app.use('/', adminRouter);
+app.use('/', ordersRouter);
+
+// Admin Orders Page route
+function requireAdmin(req, res, next) {
+  if (req.session && req.session.isAdmin) return next();
+  return res.redirect('/admin/login');
+}
+
+app.get('/admin/orders', requireAdmin, (req, res) => {
+  res.render('admin/orders', { title: 'Orders Management', layout: false });
+});
 
 // Homepage: categories with keys matching content.json
 const CATEGORY_KEYS = [
