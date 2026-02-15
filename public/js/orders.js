@@ -129,7 +129,8 @@ function setupEventListeners() {
 
   // New order
   newOrderBtn.addEventListener('click', () => {
-    alert('New order form would open here. For testing, use the seed data function in the console: seedTestData()');
+    // Open the customer intake form in a new tab or redirect
+    window.location.href = '/order-intake';
   });
 
   // Close modals on outside click

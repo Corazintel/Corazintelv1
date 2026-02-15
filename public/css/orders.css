@@ -74,11 +74,12 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: var(--spacing-md);
+  gap: var(--spacing-lg);
   flex-wrap: wrap;
   position: sticky;
   top: 0;
   z-index: 100;
+  min-height: 72px;
 }
 
 .top-bar-left {
@@ -93,6 +94,7 @@ body {
   font-size: 24px;
   font-weight: 700;
   margin: 0;
+  white-space: nowrap;
 }
 
 .search-container {
@@ -119,7 +121,7 @@ body {
   display: flex;
   gap: var(--spacing-sm);
   align-items: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 /* Buttons */
