@@ -24,6 +24,20 @@ async function verifyPassword(plain, expectedPlain) {
   return bcrypt.compare(String(plain || ''), hash);
 }
 
+// Diagnostic endpoint (remove after debugging)
+router.get('/admin/debug', (req, res) => {
+  res.json({
+    adminUserSet: !!process.env.ADMIN_USER,
+    adminUserValue: process.env.ADMIN_USER || 'NOT SET',
+    adminPasswordSet: !!process.env.ADMIN_PASSWORD,
+    adminPasswordLength: process.env.ADMIN_PASSWORD ? process.env.ADMIN_PASSWORD.length : 0,
+    sessionSecretSet: !!process.env.SESSION_SECRET,
+    sessionSecretLength: process.env.SESSION_SECRET ? process.env.SESSION_SECRET.length : 0,
+    nodeEnv: process.env.NODE_ENV,
+    port: process.env.PORT
+  });
+});
+
 router.get('/admin/login', (req, res) => {
   res.render('admin/login', { title: 'Admin Login', error: '' });
 });
