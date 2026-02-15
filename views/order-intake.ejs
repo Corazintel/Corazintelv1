@@ -96,6 +96,18 @@
                             min="<%= new Date().toISOString().split('T')[0] %>">
                         <span class="error-message"></span>
                     </div>
+
+                    <div class="form-group">
+                        <label>Upload Examples or Reference Materials (Optional)</label>
+                        <div class="file-upload" data-name="exampleFiles">
+                            <div class="file-upload-icon">📎</div>
+                            <p>Drop files here or click to upload</p>
+                            <p style="font-size: 12px; color: var(--text-light);">Upload any examples, mockups, or
+                                reference materials (PDF, images, docs)</p>
+                            <input type="file" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.zip">
+                        </div>
+                        <div class="file-list" id="exampleFilesList"></div>
+                    </div>
                 </div>
 
                 <!-- Step 2: Customer Information -->
@@ -155,63 +167,33 @@
                                 Signature</button>
                             <span class="error-message" id="signatureError"></span>
                         </div>
-
-                        <div class="form-group checkbox-group">
-                            <label class="checkbox-label">
-                                <input type="checkbox" id="consentElectronic" name="consentElectronic" required>
-                                <span>I consent to using electronic signatures for this transaction *</span>
-                            </label>
-                            <span class="error-message"></span>
-                        </div>
                     </div>
 
                     <div class="policies-section">
-                        <h3>Terms & Policies</h3>
+                        <h3>Terms & Consent</h3>
                         <p class="policies-intro">Please read and acknowledge the following:</p>
 
                         <div class="form-group checkbox-group">
                             <label class="checkbox-label">
-                                <input type="checkbox" id="policyAccuracy" name="policyAccuracy" required>
-                                <span>I confirm that all information provided is accurate and complete *</span>
+                                <input type="checkbox" id="consentTerms" name="consentTerms" required>
+                                <span><strong>I agree to the Terms of Service *</strong><br>
+                                    I confirm that all information provided is accurate and complete. I understand I
+                                    must respond to requests for additional information within 48 hours to avoid delays.
+                                    Work begins only after payment is received and intake is complete.</span>
                             </label>
+                            <span class="error-message">You must agree to the terms</span>
                         </div>
 
                         <div class="form-group checkbox-group">
                             <label class="checkbox-label">
-                                <input type="checkbox" id="policyResponse" name="policyResponse" required>
-                                <span>I understand I must respond to requests for additional information within 48 hours
-                                    *</span>
+                                <input type="checkbox" id="consentPolicy" name="consentPolicy" required>
+                                <span><strong>I understand the Service Policy *</strong><br>
+                                    I understand there are no refunds after delivery or completion of work. Revisions
+                                    are subject to our revision policy and may incur additional fees. I agree to contact
+                                    support before initiating any chargeback or dispute. I consent to using electronic
+                                    signatures for this transaction.</span>
                             </label>
-                        </div>
-
-                        <div class="form-group checkbox-group">
-                            <label class="checkbox-label">
-                                <input type="checkbox" id="policyPayment" name="policyPayment" required>
-                                <span>I understand work begins only after payment is received and intake is complete
-                                    *</span>
-                            </label>
-                        </div>
-
-                        <div class="form-group checkbox-group">
-                            <label class="checkbox-label">
-                                <input type="checkbox" id="policyRefund" name="policyRefund" required>
-                                <span>I understand there are no refunds after delivery or completion of work *</span>
-                            </label>
-                        </div>
-
-                        <div class="form-group checkbox-group">
-                            <label class="checkbox-label">
-                                <input type="checkbox" id="policyRevisions" name="policyRevisions" required>
-                                <span>I understand revisions are subject to our revision policy and may incur additional
-                                    fees *</span>
-                            </label>
-                        </div>
-
-                        <div class="form-group checkbox-group">
-                            <label class="checkbox-label">
-                                <input type="checkbox" id="policySupport" name="policySupport" required>
-                                <span>I agree to contact support before initiating any chargeback or dispute *</span>
-                            </label>
+                            <span class="error-message">You must agree to the policy</span>
                         </div>
                     </div>
                 </div>

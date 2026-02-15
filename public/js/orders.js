@@ -402,6 +402,9 @@ function renderOrderDetail(order) {
         <button class="btn btn-secondary" onclick="quickAction('${order.id}', 'priority', 'P0')">
           Escalate to P0
         </button>
+        <button class="btn" style="background: #EF4444; color: white;" onclick="deleteOrder('${order.id}', '${escapeHtml(order.customer.name)}')">
+          🗑️ Delete Order
+        </button>
       </div>
     </div>
     
@@ -794,6 +797,36 @@ async function seedTestData(count = 20) {
   } catch (error) {
     console.error('Error seeding data:', error);
     alert('Failed to seed test data');
+  }
+}
+
+// Delete Order
+async function deleteOrder(orderId, customerName) {
+  if (!confirm(`Are you sure you want to delete the order for ${customerName}?\n\nThis action cannot be undone!`)) {
+    return;
+  }
+
+  try {
+    const response = await fetch(`/api/orders/${orderId}`, {
+      method: 'DELETE'
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      alert('Order deleted successfully');
+      // Close detail panel
+      orderDetailPanel.style.display = 'none';
+      document.body.classList.remove('detail-open');
+      // Reload orders list
+      loadOrders();
+    } else {
+      throw new Error(result.message || 'Failed to delete order');
+    }
+
+  } catch (error) {
+    console.error('Error deleting order:', error);
+    alert('Failed to delete order. Please try again.');
   }
 }
 

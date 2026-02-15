@@ -186,7 +186,14 @@ body {
     border-radius: var(--radius);
     font-size: 14px;
     font-family: inherit;
+    color: var(--text);
+    background: var(--white);
     transition: all 0.2s;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: var(--text-light);
 }
 
 .form-group input:focus,

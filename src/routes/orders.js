@@ -139,6 +139,31 @@ router.post('/api/orders/:id/message', requireAdmin, async (req, res) => {
     }
 });
 
+// DELETE /api/orders/:id - Delete an order
+router.delete('/api/orders/:id', requireAdmin, async (req, res) => {
+    try {
+        const { id } = req.params;
+        const order = await getOrderById(id);
+
+        if (!order) {
+            return res.status(404).json({ success: false, message: 'Order not found' });
+        }
+
+        // In a file-based system, we need to add a deleteOrder function
+        // For now, mark as deleted by updating status
+        await updateOrder(id, {
+            status: 'Deleted',
+            deletedAt: new Date().toISOString(),
+            deletedBy: req.session.username || 'admin'
+        });
+
+        res.json({ success: true, message: 'Order deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting order:', error);
+        res.status(500).json({ success: false, message: 'Failed to delete order' });
+    }
+});
+
 // POST /api/orders/seed - Seed sample data (dev only)
 router.post('/api/orders/seed', requireAdmin, async (req, res) => {
     try {
