@@ -6,6 +6,10 @@ const express = require('express');
 const session = require('express-session');
 const { readContent } = require('./src/services/contentStore');
 
+// Database Connection
+const { connectDB } = require('./src/config/database');
+connectDB(); // Attempt to connect to MongoDB
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
