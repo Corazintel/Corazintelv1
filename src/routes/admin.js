@@ -105,9 +105,62 @@ router.post('/admin/content', requireAdmin, async (req, res) => {
         String(req.body.benefit_5 || '').trim(),
         String(req.body.benefit_6 || '').trim(),
         String(req.body.benefit_7 || '').trim(),
-        String(req.body.benefit_8 || '').trim()
-      ].filter(Boolean)
+        String(req.body.benefit_8 || '').trim(),
+      ].filter(b => b)
     },
+    positioning: {
+      statement: String(req.body.positioning_statement || '').trim()
+    },
+    process: {
+      steps: [
+        {
+          title: String(req.body.process_1_title || '').trim(),
+          desc: String(req.body.process_1_desc || '').trim()
+        },
+        {
+          title: String(req.body.process_2_title || '').trim(),
+          desc: String(req.body.process_2_desc || '').trim()
+        },
+        {
+          title: String(req.body.process_3_title || '').trim(),
+          desc: String(req.body.process_3_desc || '').trim()
+        }
+      ]
+    },
+    branches: {
+      documents: {
+        title: String(req.body.branch_doc_title || '').trim(),
+        desc: String(req.body.branch_doc_desc || '').trim(),
+        features: String(req.body.branch_doc_features || '').split(',').map(s => s.trim()).filter(s => s),
+        path: '/documents'
+      },
+      tech: {
+        title: String(req.body.branch_tech_title || '').trim(),
+        desc: String(req.body.branch_tech_desc || '').trim(),
+        features: String(req.body.branch_tech_features || '').split(',').map(s => s.trim()).filter(s => s),
+        path: '/tech-services'
+      },
+      credit: {
+        title: String(req.body.branch_credit_title || '').trim(),
+        desc: String(req.body.branch_credit_desc || '').trim(),
+        features: String(req.body.branch_credit_features || '').split(',').map(s => s.trim()).filter(s => s),
+        path: '/credit-solutions'
+      },
+      beauty: {
+        title: String(req.body.branch_beauty_title || '').trim(),
+        desc: String(req.body.branch_beauty_desc || '').trim(),
+        features: String(req.body.branch_beauty_features || '').split(',').map(s => s.trim()).filter(s => s),
+        path: '/beauty-wellness'
+      }
+    },
+    bundles: [
+      {
+        name: String(req.body.bundle_name || '').trim(),
+        price: String(req.body.bundle_price || '').trim(),
+        contactLink: '/order-intake?bundle=starter',
+        features: String(req.body.bundle_features || '').split(',').map(s => s.trim()).filter(s => s)
+      }
+    ],
     categoriesCopy: {
       career_docs: String(req.body.cat_career_docs || '').trim(),
       credit_finance: String(req.body.cat_credit_finance || '').trim(),

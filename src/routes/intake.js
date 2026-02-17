@@ -34,7 +34,8 @@ router.get('/order-intake', (req, res) => {
         title: 'Order Intake',
         brand: {
             name: process.env.BRAND_NAME || 'Corazintel'
-        }
+        },
+        query: req.query
     });
 });
 
@@ -91,6 +92,7 @@ router.post('/api/intake/submit', async (req, res) => {
 
         // Map service to category
         const categoryMap = {
+            bundle_starter: 'Business Bundle',
             tech: 'Web Development',
             documents: 'Documents',
             credit: 'Credit Repair',

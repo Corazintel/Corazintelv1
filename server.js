@@ -97,30 +97,67 @@ app.get('/order-confirmation/:orderId', async (req, res) => {
   }
 });
 
-// Admin Orders Page route
+// Branch Pages
+app.get('/documents', (req, res) => {
+  const content = res.locals.content || {};
+  const branchData = (content.branches && content.branches.documents) || {};
+  res.render('service', {
+    title: 'Documents & Legal - Corazintel',
+    service: branchData,
+    type: 'documents',
+    bundle: content.bundles ? content.bundles[0] : null
+  });
+});
+
+app.get('/tech-services', (req, res) => {
+  const content = res.locals.content || {};
+  const branchData = (content.branches && content.branches.tech) || {};
+  res.render('service', {
+    title: 'Tech Services - Corazintel',
+    service: branchData,
+    type: 'tech',
+    bundle: content.bundles ? content.bundles[0] : null
+  });
+});
+
+app.get('/credit-solutions', (req, res) => {
+  const content = res.locals.content || {};
+  const branchData = (content.branches && content.branches.credit) || {};
+  res.render('service', {
+    title: 'Credit Solutions - Corazintel',
+    service: branchData,
+    type: 'credit',
+    bundle: content.bundles ? content.bundles[0] : null
+  });
+});
+
+app.get('/beauty-wellness', (req, res) => {
+  const content = res.locals.content || {};
+  const branchData = (content.branches && content.branches.beauty) || {};
+  res.render('service', {
+    title: 'Beauty & Wellness - Corazintel',
+    service: branchData,
+    type: 'beauty',
+    bundle: content.bundles ? content.bundles[0] : null
+  });
+});
+
+// Admin Authentication Middleware
 function requireAdmin(req, res, next) {
   if (req.session && req.session.isAdmin) return next();
   return res.redirect('/admin/login');
 }
 
+// Admin Routes
 app.get('/admin/orders', requireAdmin, (req, res) => {
   res.render('admin/orders', { title: 'Orders Management', layout: false });
 });
 
-// Homepage: categories with keys matching content.json
-const CATEGORY_KEYS = [
-  { key: 'career_docs', label: 'Career & Documents', description: 'Resumes, cover letters, and professional documents.' },
-  { key: 'credit_finance', label: 'Credit & Finance Support', description: 'Credit repair and finance guidance.' },
-  { key: 'tech_support', label: 'Tech Support', description: 'Device fixes and setup help.' },
-  { key: 'beauty_wellness', label: 'Beauty & Wellness', description: 'Facials, body contour, wellness services.' },
-  { key: 'digital_products', label: 'Digital Products', description: 'Websites and apps.' },
-  { key: 'branding_print', label: 'Branding & Print', description: 'Logos, flyers, print-ready assets.' }
-];
-
+// Homepage
 app.get('/', (req, res) => {
   res.render('index', {
-    title: 'Home',
-    categories: CATEGORY_KEYS
+    title: 'Home - Corazintel',
+    // ... any other data
   });
 });
 

@@ -52,13 +52,22 @@
                         <label for="service">Service Category *</label>
                         <select id="service" name="service" required>
                             <option value="">Select a service...</option>
-                            <option value="tech">Tech (Web/Software)</option>
-                            <option value="documents">Documents</option>
-                            <option value="credit">Credit Repair</option>
-                            <option value="computer">Computer Repair</option>
-                            <option value="wig">Beauty – Wig</option>
-                            <option value="contouring">Beauty – Body Contouring</option>
-                            <option value="facials">Beauty – Facials</option>
+                            <option value="bundle_starter" <%=(typeof query !=='undefined' && query.bundle==='starter' )
+                                ? 'selected' : '' %>>Business Starter Bundle</option>
+                            <option value="tech" <%=(typeof query !=='undefined' && query.category==='tech' )
+                                ? 'selected' : '' %>>Tech (Web/Software)</option>
+                            <option value="documents" <%=(typeof query !=='undefined' && query.category==='documents' )
+                                ? 'selected' : '' %>>Documents</option>
+                            <option value="credit" <%=(typeof query !=='undefined' && query.category==='credit' )
+                                ? 'selected' : '' %>>Credit Repair</option>
+                            <option value="computer" <%=(typeof query !=='undefined' && query.category==='computer' )
+                                ? 'selected' : '' %>>Computer Repair</option>
+                            <option value="wig" <%=(typeof query !=='undefined' && query.category==='wig' ) ? 'selected'
+                                : '' %>>Beauty – Wig</option>
+                            <option value="contouring" <%=(typeof query !=='undefined' && (query.category==='contouring'
+                                || query.category==='beauty' )) ? 'selected' : '' %>>Beauty – Body Contouring</option>
+                            <option value="facials" <%=(typeof query !=='undefined' && query.category==='facials' )
+                                ? 'selected' : '' %>>Beauty – Facials</option>
                         </select>
                         <span class="error-message"></span>
                     </div>

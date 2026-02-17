@@ -1,0 +1,212 @@
+<% var contentAvailable=typeof content !=='undefined' && content; var positioning=(contentAvailable &&
+    content.positioning && content.positioning.statement) || "Empowering your lifestyle and legacy." ; var
+    processSteps=(contentAvailable && content.process && content.process.steps) || [ { title: "Consultation" ,
+    desc: "Understanding your needs." }, { title: "Custom Strategy" , desc: "Tailored plan for you." }, {
+    title: "Result & Support" , desc: "Delivering excellence." } ]; var serviceTitle=(service && service.title)
+    || 'Service' ; var serviceDesc=(service && service.desc) || '' ; var features=(service && service.features) || [];
+    var goldText="text-amber-400" ; var goldBg="bg-amber-400" ; var goldBorder="border-amber-400" ; %>
+
+    <!-- Golden Thread Positioning -->
+    <div
+        class="bg-black text-white text-center py-3 text-xs md:text-sm uppercase tracking-[0.2em] border-b border-white/10">
+        <%= positioning %>
+    </div>
+
+    <!-- Service Hero -->
+    <header class="relative bg-slate-950 py-24 md:py-32 px-4 text-center overflow-hidden">
+        <div
+            class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900 via-slate-950 to-black opacity-80">
+        </div>
+        <div class="relative z-10 max-w-4xl mx-auto">
+            <h1 class="text-5xl md:text-7xl font-display font-bold text-white mb-6 tracking-tight">
+                <%= serviceTitle %>
+            </h1>
+            <p class="text-xl md:text-2xl text-slate-300 max-w-2xl mx-auto leading-relaxed mb-10">
+                <%= serviceDesc %>
+            </p>
+
+            <!-- Sticky Mobile Button Container -->
+            <div class="fixed bottom-4 left-4 right-4 z-50 md:static md:block">
+                <a href="/order-intake?category=<%= type %>"
+                    class="block w-full md:inline-block md:w-auto <%= goldBg %> text-black font-bold text-lg px-8 py-4 rounded-full shadow-lg shadow-amber-500/20 hover:bg-amber-300 transition-all transform hover:-translate-y-1">
+                    Book Now
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- The Process (How It Works) -->
+    <section class="py-20 bg-white text-slate-900">
+        <div class="mx-auto max-w-7xl px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-sm font-bold <%= goldText %> uppercase tracking-widest mb-2">Our Process</h2>
+                <h3 class="text-3xl md:text-4xl font-display font-bold text-slate-900">How We Work</h3>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 relative">
+                <!-- Connecting Line (Desktop) -->
+                <div class="hidden md:block absolute top-12 left-0 right-0 h-0.5 bg-slate-200 z-0"></div>
+
+                <% processSteps.forEach(function(step, index) { %>
+                    <div class="relative z-10 bg-white p-6 text-center">
+                        <div
+                            class="w-24 h-24 mx-auto <%= goldBg %> rounded-full flex items-center justify-center text-black font-bold text-3xl mb-6 shadow-xl relative">
+                            <%= index + 1 %>
+                        </div>
+                        <h4 class="text-xl font-bold mb-3">
+                            <%= step.title %>
+                        </h4>
+                        <p class="text-slate-600">
+                            <%= step.desc %>
+                        </p>
+                    </div>
+                    <% }) %>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features / Service Grid -->
+    <section class="py-20 bg-slate-50">
+        <div class="mx-auto max-w-5xl px-4 text-center">
+            <h3 class="text-3xl font-display font-bold mb-12">What We Offer</h3>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <% features.forEach(function(feature) { %>
+                    <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition">
+                        <div
+                            class="w-12 h-12 <%= goldBg %> rounded-lg mb-4 flex items-center justify-center mx-auto text-black">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                                stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                            </svg>
+                        </div>
+                        <h4 class="font-bold text-lg mb-2">
+                            <%= feature %>
+                        </h4>
+                        <p class="text-sm text-slate-500">Professional service tailored to your requirements.</p>
+                    </div>
+                    <% }) %>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Table (Tech & Credit only) -->
+    <% if (type==='tech' || type==='credit' ) { %>
+        <section class="py-20 bg-white">
+            <div class="mx-auto max-w-6xl px-4">
+                <div class="text-center mb-16">
+                    <h3 class="text-3xl font-display font-bold">Choose Your Level</h3>
+                    <p class="text-slate-600 mt-4">Transparent pricing for every budget.</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8 text-center">
+                    <!-- Basic -->
+                    <div class="border border-slate-200 rounded-3xl p-8">
+                        <h4 class="text-xl font-bold mb-4">Basic</h4>
+                        <div class="text-4xl font-display font-bold mb-6">$99<span
+                                class="text-base font-normal text-slate-500">/mo</span></div>
+                        <ul class="space-y-4 mb-8 text-left text-sm text-slate-600">
+                            <li class="flex gap-2"><span>✓</span> Essential Coverage</li>
+                            <li class="flex gap-2"><span>✓</span> Email Support</li>
+                        </ul>
+                        <a href="/order-intake?category=<%= type %>&tier=basic"
+                            class="btn w-full border border-slate-300 hover:bg-slate-50">Select Basic</a>
+                    </div>
+                    <!-- Pro -->
+                    <div class="border-2 <%= goldBorder %> relative rounded-3xl p-8 shadow-xl">
+                        <div
+                            class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 <%= goldBg %> text-black text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                            Most Popular</div>
+                        <h4 class="text-xl font-bold mb-4">Pro</h4>
+                        <div class="text-4xl font-display font-bold mb-6">$199<span
+                                class="text-base font-normal text-slate-500">/mo</span></div>
+                        <ul class="space-y-4 mb-8 text-left text-sm text-slate-600">
+                            <li class="flex gap-2"><span>✓</span> Full Coverage</li>
+                            <li class="flex gap-2"><span>✓</span> Priority Support</li>
+                            <li class="flex gap-2"><span>✓</span> Monthly Check-ins</li>
+                        </ul>
+                        <a href="/order-intake?category=<%= type %>&tier=pro"
+                            class="btn w-full <%= goldBg %> text-black hover:bg-amber-300">Select Pro</a>
+                    </div>
+                    <!-- Elite -->
+                    <div class="border border-slate-200 rounded-3xl p-8 bg-slate-50">
+                        <h4 class="text-xl font-bold mb-4">Elite</h4>
+                        <div class="text-4xl font-display font-bold mb-6">$399<span
+                                class="text-base font-normal text-slate-500">/mo</span></div>
+                        <ul class="space-y-4 mb-8 text-left text-sm text-slate-600">
+                            <li class="flex gap-2"><span>✓</span> All Pro Features</li>
+                            <li class="flex gap-2"><span>✓</span> 24/7 Access</li>
+                            <li class="flex gap-2"><span>✓</span> Designated Agent</li>
+                        </ul>
+                        <a href="/order-intake?category=<%= type %>&tier=elite"
+                            class="btn w-full border border-slate-300 hover:bg-white">Select Elite</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <% } %>
+
+            <!-- FAQ (Beauty only) -->
+            <% if (type==='beauty' ) { %>
+                <section class="py-20 bg-slate-50">
+                    <div class="mx-auto max-w-4xl px-4">
+                        <h3 class="text-3xl font-display font-bold text-center mb-12">Common Questions</h3>
+                        <div class="space-y-4">
+                            <div class="bg-white rounded-xl p-6 shadow-sm">
+                                <h4 class="font-bold mb-2">Does it hurt?</h4>
+                                <p class="text-slate-600">Most treatments are minimally invasive and designed for
+                                    comfort. We use numbing agents where appropriate.</p>
+                            </div>
+                            <div class="bg-white rounded-xl p-6 shadow-sm">
+                                <h4 class="font-bold mb-2">How many sessions do I need?</h4>
+                                <p class="text-slate-600">Results vary, but optimal results typically require 3-6
+                                    sessions spaced 2-4 weeks apart.</p>
+                            </div>
+                            <div class="bg-white rounded-xl p-6 shadow-sm">
+                                <h4 class="font-bold mb-2">Is there downtime?</h4>
+                                <p class="text-slate-600">Minimal to no downtime is required for most of our body
+                                    contouring and facial services.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <% } %>
+
+                    <!-- Starter Business Bundle -->
+                    <% if ((type==='documents' || type==='credit' ) && bundle) { %>
+                        <section class="py-20 bg-slate-900 text-white relative overflow-hidden">
+                            <div class="mx-auto max-w-5xl px-4 relative z-10 text-center">
+                                <span
+                                    class="<%= goldText %> text-sm font-bold uppercase tracking-widest mb-4 block">Limited
+                                    Time Offer</span>
+                                <h2 class="text-4xl md:text-5xl font-display font-bold mb-6">
+                                    <%= bundle.name %>
+                                </h2>
+                                <p class="text-xl text-slate-300 mb-8 max-w-2xl mx-auto">Launch your business
+                                    confidently with our all-in-one package. LLC Formation, Logo Design, and Credit
+                                    Consultation included.</p>
+                                <div class="text-5xl font-bold <%= goldText %> mb-10">
+                                    <%= bundle.price %>
+                                </div>
+                                <a href="<%= bundle.contactLink %>"
+                                    class="btn <%= goldBg %> text-black text-lg px-10 py-4 font-bold rounded-full hover:scale-105 transition transform">Claim
+                                    Offer</a>
+                            </div>
+                        </section>
+                        <% } %>
+
+                            <!-- Trust Signals Footer -->
+                            <div class="bg-white border-t border-slate-100 py-8 text-center">
+                                <div class="flex justify-center gap-8 text-slate-400 grayscale opacity-70">
+                                    <!-- Placeholders for Trust Badges -->
+                                    <div class="flex items-center gap-2"><svg class="w-5 h-5" fill="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path
+                                                d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z" />
+                                        </svg> Secure Payment</div>
+                                    <div class="flex items-center gap-2"><svg class="w-5 h-5" fill="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path
+                                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                                        </svg> Certified Pro</div>
+                                </div>
+                            </div>

@@ -11,11 +11,55 @@ const DEFAULT_CONTENT = {
     brand: {
         slogan: 'Real Solutions. Multifaceted Expertise.'
     },
+    positioning: {
+        statement: "Empowering your lifestyle and legacy. Professional solutions for Business, Credit, and Beauty."
+    },
     hero: {
         headline: 'Welcome to Corazintel',
         subheadline: 'Your trusted partner for professional services',
         benefits: []
     },
+    process: {
+        steps: [
+            { title: "Consultation", desc: "We start by understanding your unique goals and challenges." },
+            { title: "Custom Strategy", desc: "We develop a tailored plan designed for your success." },
+            { title: "Result & Support", desc: "We deliver high-quality results and ongoing support." }
+        ]
+    },
+    branches: {
+        documents: {
+            title: "Professional Documents",
+            desc: "LLC formation, career documents, and legal templates.",
+            features: ["LLC Formation", "Resume Revamp", "Legal Contracts"],
+            path: "/documents"
+        },
+        tech: {
+            title: "Tech Services",
+            desc: "Expert device repairs and cutting-edge digital design.",
+            features: ["Hardware Repair", "Web Design", "Software Support"],
+            path: "/tech-services"
+        },
+        credit: {
+            title: "Credit Solutions",
+            desc: "Comprehensive credit repair and financial guidance.",
+            features: ["Credit Audit", "Dispute Management", "Financial Planning"],
+            path: "/credit-solutions"
+        },
+        beauty: {
+            title: "Beauty & Wellness",
+            desc: "Luxury aesthetic treatments and skincare solutions.",
+            features: ["Facials", "Body Contouring", "Custom Wigs"],
+            path: "/beauty-wellness"
+        }
+    },
+    bundles: [
+        {
+            name: "Starter Business Bundle",
+            price: "Contact for Pricing",
+            contactLink: "/order-intake?bundle=starter",
+            features: ["LLC Formation", "Logo Design", "Credit Consultation"]
+        }
+    ],
     categoriesCopy: {
         career_docs: 'Professional resumes and documents',
         credit_finance: 'Credit repair and financial guidance',
@@ -72,7 +116,10 @@ async function readContent() {
 
     try {
         const data = await fs.readFile(CONTENT_PATH, 'utf8');
-        return JSON.parse(data);
+        const parsed = JSON.parse(data);
+        // Shallow merge to ensure new top-level keys (branches, positioning, etc.) exist
+        // if they differ from the file version.
+        return { ...DEFAULT_CONTENT, ...parsed };
     } catch (error) {
         if (error.code === 'ENOENT') {
             // File doesn't exist, return default structure

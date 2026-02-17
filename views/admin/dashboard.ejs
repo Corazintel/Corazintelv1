@@ -22,7 +22,11 @@
       <div class="mt-3 text-sm text-slate-300 grid gap-2">
         <a class="hover:text-white" href="/admin/orders">📦 Orders Management</a>
         <a class="hover:text-white" href="#brand">Brand</a>
+        <a class="hover:text-white" href="#positioning">Positioning</a>
         <a class="hover:text-white" href="#hero">Hero</a>
+        <a class="hover:text-white" href="#process">Process</a>
+        <a class="hover:text-white" href="#branches">Branches</a>
+        <a class="hover:text-white" href="#bundles">Bundles</a>
         <a class="hover:text-white" href="#categories">Category copy</a>
         <a class="hover:text-white" href="#testimonials">Testimonials</a>
         <a class="hover:text-white" href="#faq">FAQ</a>
@@ -35,9 +39,16 @@
     <div class="lg:col-span-9 grid gap-6">
       <div id="brand" class="rounded-3xl border border-slate-800 bg-slate-900/30 p-6">
         <div class="text-white font-semibold">Brand</div>
-
         <label class="block text-sm text-slate-200 font-semibold mt-4" for="brand_slogan">Slogan</label>
         <input class="input mt-2" id="brand_slogan" name="brand_slogan" required value="<%= content.brand.slogan %>" />
+      </div>
+
+      <div id="positioning" class="rounded-3xl border border-slate-800 bg-slate-900/30 p-6">
+        <div class="text-white font-semibold">Positioning (Golden Thread)</div>
+        <label class="block text-sm text-slate-200 font-semibold mt-4">Statement</label>
+        <input class="input mt-2" name="positioning_statement"
+          value="<%= (content.positioning && content.positioning.statement) || '' %>"
+          placeholder="Empowering your lifestyle..." />
       </div>
 
       <div id="hero" class="rounded-3xl border border-slate-800 bg-slate-900/30 p-6">
@@ -51,125 +62,186 @@
         <textarea class="input mt-2 min-h-[110px]" id="hero_subheadline" name="hero_subheadline"
           required><%= content.hero.subheadline %></textarea>
 
-        <div class="mt-5 text-slate-200 font-semibold text-sm">Benefit bullets (up to 8)</div>
-        <% for (let i=0; i < 8; i++) { %>
-          <label class="block text-sm text-slate-200 font-semibold mt-4" for="benefit_<%= i+1 %>">Bullet <%= i+1 %>
-              </label>
-          <input class="input mt-2" id="benefit_<%= i+1 %>" name="benefit_<%= i+1 %>"
-            value="<%= (content.hero.benefits[i] || '') %>" />
+        <div class="mt-5 text-slate-200 font-semibold text-sm">Benefit bullets (Home Page)</div>
+        <% for (let i=0; i < 4; i++) { %>
+          <label class="block text-sm text-slate-200 font-semibold mt-4">Bullet <%= i+1 %></label>
+          <input class="input mt-2" name="benefit_<%= i+1 %>" value="<%= (content.hero.benefits[i] || '') %>" />
           <% } %>
       </div>
 
+      <div id="process" class="rounded-3xl border border-slate-800 bg-slate-900/30 p-6">
+        <div class="text-white font-semibold">Process Steps</div>
+        <% for(let i=0; i<3; i++) { let step=(content.process && content.process.steps && content.process.steps[i]) ||
+          {title:'', desc:''}; %>
+          <div class="mt-4 border-t border-slate-800 pt-4">
+            <label class="block text-sm text-slate-200 mt-2">Step <%= i+1 %> Title</label>
+            <input class="input mt-1" name="process_<%= i+1 %>_title" value="<%= step.title %>" />
+            <label class="block text-sm text-slate-200 mt-2">Step <%= i+1 %> Desc</label>
+            <input class="input mt-1" name="process_<%= i+1 %>_desc" value="<%= step.desc %>" />
+          </div>
+          <% } %>
+      </div>
+
+      <div id="branches" class="rounded-3xl border border-slate-800 bg-slate-900/30 p-6">
+        <div class="text-white font-semibold">Branch Pages</div>
+
+        <!-- Documents -->
+        <div class="mt-6 border-l-4 border-emerald-500 pl-4 py-2 bg-slate-900/50">
+          <strong class="text-emerald-400 block mb-2">Documents & Legal</strong>
+          <label class="block text-sm text-slate-200 mt-2">Title</label>
+          <input class="input mt-1" name="branch_doc_title"
+            value="<%= (content.branches && content.branches.documents && content.branches.documents.title) || '' %>" />
+          <label class="block text-sm text-slate-200 mt-2">Description</label>
+          <textarea class="input mt-1"
+            name="branch_doc_desc"><%= (content.branches && content.branches.documents && content.branches.documents.desc) || '' %></textarea>
+          <label class="block text-sm text-slate-200 mt-2">Features (comma separated)</label>
+          <input class="input mt-1" name="branch_doc_features"
+            value="<%= ((content.branches && content.branches.documents && content.branches.documents.features) || []).join(', ') %>" />
+        </div>
+
+        <!-- Tech -->
+        <div class="mt-6 border-l-4 border-emerald-500 pl-4 py-2 bg-slate-900/50">
+          <strong class="text-emerald-400 block mb-2">Tech Services</strong>
+          <label class="block text-sm text-slate-200 mt-2">Title</label>
+          <input class="input mt-1" name="branch_tech_title"
+            value="<%= (content.branches && content.branches.tech && content.branches.tech.title) || '' %>" />
+          <label class="block text-sm text-slate-200 mt-2">Description</label>
+          <textarea class="input mt-1"
+            name="branch_tech_desc"><%= (content.branches && content.branches.tech && content.branches.tech.desc) || '' %></textarea>
+          <label class="block text-sm text-slate-200 mt-2">Features (comma separated)</label>
+          <input class="input mt-1" name="branch_tech_features"
+            value="<%= ((content.branches && content.branches.tech && content.branches.tech.features) || []).join(', ') %>" />
+        </div>
+
+        <!-- Credit -->
+        <div class="mt-6 border-l-4 border-emerald-500 pl-4 py-2 bg-slate-900/50">
+          <strong class="text-emerald-400 block mb-2">Credit Solutions</strong>
+          <label class="block text-sm text-slate-200 mt-2">Title</label>
+          <input class="input mt-1" name="branch_credit_title"
+            value="<%= (content.branches && content.branches.credit && content.branches.credit.title) || '' %>" />
+          <label class="block text-sm text-slate-200 mt-2">Description</label>
+          <textarea class="input mt-1"
+            name="branch_credit_desc"><%= (content.branches && content.branches.credit && content.branches.credit.desc) || '' %></textarea>
+          <label class="block text-sm text-slate-200 mt-2">Features (comma separated)</label>
+          <input class="input mt-1" name="branch_credit_features"
+            value="<%= ((content.branches && content.branches.credit && content.branches.credit.features) || []).join(', ') %>" />
+        </div>
+
+        <!-- Beauty -->
+        <div class="mt-6 border-l-4 border-emerald-500 pl-4 py-2 bg-slate-900/50">
+          <strong class="text-emerald-400 block mb-2">Beauty & Wellness</strong>
+          <label class="block text-sm text-slate-200 mt-2">Title</label>
+          <input class="input mt-1" name="branch_beauty_title"
+            value="<%= (content.branches && content.branches.beauty && content.branches.beauty.title) || '' %>" />
+          <label class="block text-sm text-slate-200 mt-2">Description</label>
+          <textarea class="input mt-1"
+            name="branch_beauty_desc"><%= (content.branches && content.branches.beauty && content.branches.beauty.desc) || '' %></textarea>
+          <label class="block text-sm text-slate-200 mt-2">Features (comma separated)</label>
+          <input class="input mt-1" name="branch_beauty_features"
+            value="<%= ((content.branches && content.branches.beauty && content.branches.beauty.features) || []).join(', ') %>" />
+        </div>
+      </div>
+
+      <div id="bundles" class="rounded-3xl border border-slate-800 bg-slate-900/30 p-6">
+        <div class="text-white font-semibold">Active Bundle (Starter)</div>
+        <% var bundle=(content.bundles && content.bundles[0]) || {}; %>
+          <label class="block text-sm text-slate-200 mt-4">Bundle Name</label>
+          <input class="input mt-1" name="bundle_name" value="<%= bundle.name || '' %>" />
+          <label class="block text-sm text-slate-200 mt-2">Price</label>
+          <input class="input mt-1" name="bundle_price" value="<%= bundle.price || '' %>" />
+          <label class="block text-sm text-slate-200 mt-2">Features (comma separated)</label>
+          <input class="input mt-1" name="bundle_features" value="<%= (bundle.features || []).join(', ') %>" />
+      </div>
+
       <div id="categories" class="rounded-3xl border border-slate-800 bg-slate-900/30 p-6">
-        <div class="text-white font-semibold">Category copy</div>
+        <div class="text-white font-semibold">Category copy (Intake Form)</div>
+        <p class="text-xs text-slate-400 mb-4">These descriptions appear on the order intake form.</p>
 
         <label class="block text-sm text-slate-200 font-semibold mt-4" for="cat_career_docs">Career & Documents</label>
-        <textarea class="input mt-2 min-h-[90px]" id="cat_career_docs"
+        <textarea class="input mt-2 min-h-[70px]" id="cat_career_docs"
           name="cat_career_docs"><%= content.categoriesCopy.career_docs %></textarea>
 
         <label class="block text-sm text-slate-200 font-semibold mt-5" for="cat_credit_finance">Credit & Finance
           Support</label>
-        <textarea class="input mt-2 min-h-[90px]" id="cat_credit_finance"
+        <textarea class="input mt-2 min-h-[70px]" id="cat_credit_finance"
           name="cat_credit_finance"><%= content.categoriesCopy.credit_finance %></textarea>
 
         <label class="block text-sm text-slate-200 font-semibold mt-5" for="cat_tech_support">Tech Support</label>
-        <textarea class="input mt-2 min-h-[90px]" id="cat_tech_support"
+        <textarea class="input mt-2 min-h-[70px]" id="cat_tech_support"
           name="cat_tech_support"><%= content.categoriesCopy.tech_support %></textarea>
 
         <label class="block text-sm text-slate-200 font-semibold mt-5" for="cat_beauty_wellness">Beauty &
           Wellness</label>
-        <textarea class="input mt-2 min-h-[90px]" id="cat_beauty_wellness"
+        <textarea class="input mt-2 min-h-[70px]" id="cat_beauty_wellness"
           name="cat_beauty_wellness"><%= content.categoriesCopy.beauty_wellness %></textarea>
 
         <label class="block text-sm text-slate-200 font-semibold mt-5" for="cat_digital_products">Digital
           Products</label>
-        <textarea class="input mt-2 min-h-[90px]" id="cat_digital_products"
+        <textarea class="input mt-2 min-h-[70px]" id="cat_digital_products"
           name="cat_digital_products"><%= content.categoriesCopy.digital_products %></textarea>
 
         <label class="block text-sm text-slate-200 font-semibold mt-5" for="cat_branding_print">Branding & Print</label>
-        <textarea class="input mt-2 min-h-[90px]" id="cat_branding_print"
+        <textarea class="input mt-2 min-h-[70px]" id="cat_branding_print"
           name="cat_branding_print"><%= content.categoriesCopy.branding_print %></textarea>
       </div>
 
       <div id="testimonials" class="rounded-3xl border border-slate-800 bg-slate-900/30 p-6">
         <div class="text-white font-semibold">Testimonials (3)</div>
 
-        <% const t=content.testimonials; %>
+        <% var t=content.testimonials || []; %>
           <% for (let i=0; i < 3; i++) { %>
             <div class="mt-6 rounded-2xl border border-slate-800 bg-slate-950 p-4">
               <div class="text-slate-200 font-semibold text-sm">Testimonial <%= i+1 %>
               </div>
-
-              <label class="block text-sm text-slate-200 font-semibold mt-4" for="t<%= i+1 %>_quote">Quote</label>
-              <input class="input mt-2" id="t<%= i+1 %>_quote" name="t<%= i+1 %>_quote"
-                value="<%= (t[i] && t[i].quote) || '' %>" />
-
-              <label class="block text-sm text-slate-200 font-semibold mt-4" for="t<%= i+1 %>_text">Text</label>
-              <textarea class="input mt-2 min-h-[90px]" id="t<%= i+1 %>_text"
-                name="t<%= i+1 %>_text"><%= (t[i] && t[i].text) || '' %></textarea>
-
-              <label class="block text-sm text-slate-200 font-semibold mt-4" for="t<%= i+1 %>_by">By</label>
-              <input class="input mt-2" id="t<%= i+1 %>_by" name="t<%= i+1 %>_by"
-                value="<%= (t[i] && t[i].by) || '' %>" />
+              <label class="block text-xs text-slate-400 mt-2">Quote</label>
+              <input class="input mt-1" name="testimonial_<%= i %>_quote" value="<%= (t[i] && t[i].quote) || '' %>" />
+              <label class="block text-xs text-slate-400 mt-2">Full Text</label>
+              <textarea class="input mt-1" name="testimonial_<%= i %>_text"><%= (t[i] && t[i].text) || '' %></textarea>
+              <label class="block text-xs text-slate-400 mt-2">By (Name)</label>
+              <input class="input mt-1" name="testimonial_<%= i %>_by" value="<%= (t[i] && t[i].by) || '' %>" />
             </div>
             <% } %>
       </div>
 
       <div id="faq" class="rounded-3xl border border-slate-800 bg-slate-900/30 p-6">
-        <div class="text-white font-semibold">FAQ (4)</div>
-        <% const f=content.faq; %>
-          <% for (let i=0; i < 4; i++) { %>
-            <div class="mt-6 rounded-2xl border border-slate-800 bg-slate-950 p-4">
-              <div class="text-slate-200 font-semibold text-sm">FAQ <%= i+1 %>
-              </div>
-
-              <label class="block text-sm text-slate-200 font-semibold mt-4" for="f<%= i+1 %>_q">Question</label>
-              <input class="input mt-2" id="f<%= i+1 %>_q" name="f<%= i+1 %>_q" value="<%= (f[i] && f[i].q) || '' %>" />
-
-              <label class="block text-sm text-slate-200 font-semibold mt-4" for="f<%= i+1 %>_a">Answer</label>
-              <textarea class="input mt-2 min-h-[90px]" id="f<%= i+1 %>_a"
-                name="f<%= i+1 %>_a"><%= (f[i] && f[i].a) || '' %></textarea>
+        <div class="text-white font-semibold">FAQ (3 items)</div>
+        <% var faq=content.faq || []; %>
+          <% for (let i=0; i < 3; i++) { %>
+            <div class="mt-4 border-t border-slate-800 pt-4">
+              <label class="block text-sm text-slate-200 font-semibold" for="faq_<%= i %>_q">Question <%= i+1 %></label>
+              <input class="input mt-1" name="faq_<%= i %>_q" value="<%= (faq[i] && faq[i].q) || '' %>" />
+              <label class="block text-xs text-slate-400 mt-2">Answer</label>
+              <textarea class="input mt-1" name="faq_<%= i %>_a"><%= (faq[i] && faq[i].a) || '' %></textarea>
             </div>
             <% } %>
       </div>
 
       <div id="footer" class="rounded-3xl border border-slate-800 bg-slate-900/30 p-6">
-        <div class="text-white font-semibold">Footer + Social + Contact</div>
+        <div class="text-white font-semibold">Footer & Contact</div>
 
-        <label class="block text-sm text-slate-200 font-semibold mt-4" for="footer_note">Footer note</label>
-        <input class="input mt-2" id="footer_note" name="footer_note" value="<%= content.footer.note %>" />
+        <label class="block text-sm text-slate-200 font-semibold mt-4" for="footer_note">Footer Note</label>
+        <input class="input mt-2" id="footer_note" name="footer_note" required
+          value="<%= (content.footer && content.footer.note) || '' %>" />
 
-        <div class="mt-6 grid gap-4 md:grid-cols-2">
-          <div class="rounded-2xl border border-slate-800 bg-slate-950 p-4">
-            <div class="text-slate-200 font-semibold text-sm">Contact</div>
+        <label class="block text-sm text-slate-200 font-semibold mt-5" for="contact_email">Email</label>
+        <input class="input mt-2" id="contact_email" name="contact_email"
+          value="<%= (content.contact && content.contact.email) || '' %>" />
 
-            <label class="block text-sm text-slate-200 font-semibold mt-4" for="contact_email">Email</label>
-            <input class="input mt-2" id="contact_email" name="contact_email" value="<%= content.contact.email %>" />
+        <label class="block text-sm text-slate-200 font-semibold mt-5" for="contact_phone">Phone</label>
+        <input class="input mt-2" id="contact_phone" name="contact_phone"
+          value="<%= (content.contact && content.contact.phone) || '' %>" />
 
-            <label class="block text-sm text-slate-200 font-semibold mt-4" for="contact_phone">Phone</label>
-            <input class="input mt-2" id="contact_phone" name="contact_phone" value="<%= content.contact.phone %>" />
+        <label class="block text-sm text-slate-200 font-semibold mt-5" for="social_instagram">Instagram</label>
+        <input class="input mt-2" id="social_instagram" name="social_instagram"
+          value="<%= (content.social && content.social.instagram) || '' %>" />
 
-            <label class="block text-sm text-slate-200 font-semibold mt-4" for="contact_location">Location</label>
-            <input class="input mt-2" id="contact_location" name="contact_location"
-              value="<%= content.contact.location %>" />
-          </div>
+        <label class="block text-sm text-slate-200 font-semibold mt-5" for="social_tiktok">TikTok</label>
+        <input class="input mt-2" id="social_tiktok" name="social_tiktok"
+          value="<%= (content.social && content.social.tiktok) || '' %>" />
 
-          <div class="rounded-2xl border border-slate-800 bg-slate-950 p-4">
-            <div class="text-slate-200 font-semibold text-sm">Social</div>
-
-            <label class="block text-sm text-slate-200 font-semibold mt-4" for="social_instagram">Instagram URL</label>
-            <input class="input mt-2" id="social_instagram" name="social_instagram"
-              value="<%= content.social.instagram %>" />
-
-            <label class="block text-sm text-slate-200 font-semibold mt-4" for="social_tiktok">TikTok URL</label>
-            <input class="input mt-2" id="social_tiktok" name="social_tiktok" value="<%= content.social.tiktok %>" />
-
-            <label class="block text-sm text-slate-200 font-semibold mt-4" for="social_youtube">YouTube URL</label>
-            <input class="input mt-2" id="social_youtube" name="social_youtube" value="<%= content.social.youtube %>" />
-          </div>
-        </div>
-
-        <button class="btn btn-primary w-full mt-6 lg:hidden" type="submit">Save changes</button>
+        <label class="block text-sm text-slate-200 font-semibold mt-5" for="social_youtube">YouTube</label>
+        <input class="input mt-2" id="social_youtube" name="social_youtube"
+          value="<%= (content.social && content.social.youtube) || '' %>" />
       </div>
     </div>
   </form>

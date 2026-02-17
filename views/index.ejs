@@ -1,12 +1,17 @@
-<% var contentAvailable=typeof content !=='undefined' && content; var heroHeadline=(contentAvailable && content.hero &&
-  content.hero.headline) || "Buy the help you need — career, credit, tech, beauty, and design." ; var
-  heroSub=(contentAvailable && content.hero && content.hero.subheadline)
-  || "Pick a category, choose a service, and check out securely. We handle the rest." ; var benefits=(contentAvailable
-  && content.hero && content.hero.benefits) || []; var testimonials=(contentAvailable && content.testimonials) || [];
-  var faq=(contentAvailable && content.faq) || []; var contact=(contentAvailable && content.contact) || {}; var
-  social=(contentAvailable && content.social) || {}; var footerNote=(contentAvailable && content.footer &&
-  content.footer.note) || "Secure checkout via Stripe. Mobile-first. Fast service flow." ; var getIcon=function(key) {
-  var icons={
+<% var contentAvailable=typeof content !=='undefined' && content; var positioning=(contentAvailable &&
+  content.positioning && content.positioning.statement) || "Empowering your lifestyle and legacy." ; var
+  heroHeadline=(contentAvailable && content.hero && content.hero.headline)
+  || "Buy the help you need — career, credit, tech, beauty, and design." ; var heroSub=(contentAvailable && content.hero
+  && content.hero.subheadline) || "Pick a category, choose a service, and check out securely. We handle the rest." ; var
+  benefits=(contentAvailable && content.hero && content.hero.benefits) || []; var testimonials=(contentAvailable &&
+  content.testimonials) || []; var faq=(contentAvailable && content.faq) || []; var contact=(contentAvailable &&
+  content.contact) || {}; var social=(contentAvailable && content.social) || {}; var footerNote=(contentAvailable &&
+  content.footer && content.footer.note) || "Secure checkout via Stripe. Mobile-first. Fast service flow." ; var
+  branches=(contentAvailable && content.branches) || {}; var branchKeys=Object.keys(branches); var
+  processSteps=(contentAvailable && content.process && content.process.steps) || [ { title: "Consultation" ,
+  desc: "Understanding your needs." }, { title: "Custom Strategy" , desc: "Tailored plan for you." }, {
+  title: "Result & Support" , desc: "Delivering excellence." } ]; var goldText="text-amber-400" ; var
+  goldBg="bg-amber-400" ; var getIcon=function(key) { var icons={
   tech: '<path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" />'
   ,
   documents: '<path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />'
@@ -20,14 +25,22 @@
   contouring: '<path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 0 1-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 0 0 6.16-12.12A14.98 14.98 0 0 0 9.631 8.41m5.96 5.96a14.926 14.926 0 0 1-5.841 2.58m-.119-8.54a6 6 0 0 0-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 0 0-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 0 1-2.448-2.448 14.9 14.9 0 0 1 .06-.312m-2.24 2.39a4.493 4.493 0 0 0-1.757 4.306 4.493 4.493 0 0 0 4.306-1.758M16.5 9a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />'
   ,
   facials: '<path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" />'
+  ,
+  beauty: '<path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75" />'
   }; return icons[key] || icons.tech; }; %>
+
+  <!-- Golden Thread Positioning -->
+  <div
+    class="bg-black text-white text-center py-3 text-xs md:text-sm uppercase tracking-[0.2em] border-b border-white/10 sticky top-14 z-40">
+    <%= positioning %>
+  </div>
 
   <!-- HERO SECTION -->
   <section class="relative mx-auto max-w-7xl px-4 pt-16 pb-24 md:pt-24 lg:pt-32">
     <div class="text-center max-w-4xl mx-auto">
       <div
-        class="inline-flex items-center gap-2 rounded-full border border-slate-700 bg-slate-800/50 px-3 py-1 text-sm text-emerald-400 mb-6">
-        <span class="flex h-2 w-2 rounded-full bg-emerald-500"></span>
+        class="inline-flex items-center gap-2 rounded-full border border-slate-700 bg-slate-800/50 px-3 py-1 text-sm <%= goldText %> mb-6">
+        <span class="flex h-2 w-2 rounded-full <%= goldBg %>"></span>
         Accepting New Clients
       </div>
 
@@ -40,16 +53,12 @@
       </p>
 
       <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-        <a href="/order-intake"
-          class="btn btn-primary text-lg px-8 py-4 shadow-lg shadow-emerald-500/20 hover:scale-105 transform transition-all duration-300 group">
-          Start Your Order
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-            class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-          </svg>
+        <a href="#branches"
+          class="btn <%= goldBg %> text-black font-bold text-lg px-8 py-4 shadow-lg shadow-amber-500/20 hover:scale-105 transform transition-all duration-300">
+          Explore Services
         </a>
         <a href="#about" class="btn btn-ghost text-lg px-8 py-4">
-          Learn More
+          Our Story
         </a>
       </div>
 
@@ -57,7 +66,7 @@
       <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 text-left">
         <% (benefits || []).slice(0, 4).forEach(function(b) { %>
           <div class="flex items-center gap-3 bg-slate-900/40 p-3 rounded-lg border border-slate-800/50">
-            <div class="flex-shrink-0 text-emerald-400">
+            <div class="flex-shrink-0 <%= goldText %>">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                 stroke="currentColor" class="w-5 h-5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
@@ -72,72 +81,92 @@
     </div>
   </section>
 
-  <!-- SERVICES SECTION -->
-  <section id="services" class="relative py-20 bg-slate-900/30">
+  <!-- SERVICES HUB (BRANCHES) -->
+  <section id="branches" class="relative py-20 bg-slate-900/30">
     <div class="mx-auto max-w-7xl px-4">
       <div class="text-center mb-16">
-        <h2 class="text-sm font-semibold text-emerald-400 tracking-wider uppercase mb-2">Our Services</h2>
-        <h3 class="text-3xl md:text-4xl font-display font-bold text-white">Choose Your Category</h3>
-        <p class="mt-4 text-slate-400 max-w-2xl mx-auto">We offer a wide range of professional services tailored to your
-          needs.</p>
+        <h2 class="text-sm font-semibold <%= goldText %> tracking-wider uppercase mb-2">Our Capabilities</h2>
+        <h3 class="text-3xl md:text-4xl font-display font-bold text-white">Choose Your Path</h3>
       </div>
 
-      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        <% categories.forEach(function(c) { %>
-          <div
-            class="group relative rounded-3xl border border-slate-800 bg-slate-900/50 p-6 hover:border-emerald-500/50 hover:bg-slate-800/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-emerald-500/10">
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <% branchKeys.forEach(function(key) { var branch=branches[key]; %>
+          <a href="<%= branch.path %>"
+            class="group relative rounded-3xl border border-slate-800 bg-slate-900/50 p-6 hover:border-amber-500/50 hover:bg-slate-800/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-amber-500/10 block">
             <div
-              class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-400 group-hover:bg-emerald-500 group-hover:text-white transition-colors duration-300">
+              class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-amber-500/10 <%= goldText %> group-hover:<%= goldBg %> group-hover:text-black transition-colors duration-300">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="w-6 h-6">
-                <%- getIcon(c.key) %>
+                <%- getIcon(key) %>
               </svg>
             </div>
 
-            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-emerald-300 transition-colors">
-              <%= c.label %>
+            <h3 class="text-xl font-bold text-white mb-2 group-hover:<%= goldText %> transition-colors">
+              <%= branch.title %>
             </h3>
 
             <p class="text-sm text-slate-400 leading-relaxed mb-4">
-              <%= (contentAvailable && content.categoriesCopy && content.categoriesCopy[c.key]) ?
-                content.categoriesCopy[c.key] : c.description %>
+              <%= branch.desc %>
             </p>
 
-            <a href="/order-intake?service=<%= c.key %>"
-              class="inline-flex items-center text-sm font-semibold text-emerald-400 group-hover:text-emerald-300">
-              Select Service
+            <span class="inline-flex items-center text-sm font-semibold <%= goldText %> group-hover:text-amber-300">
+              View details
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                 stroke="currentColor" class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
               </svg>
-            </a>
+            </span>
+          </a>
+          <% }) %>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE PROCESS (Directory style) -->
+  <section class="py-20 bg-slate-900">
+    <div class="mx-auto max-w-7xl px-4">
+      <div class="text-center mb-16">
+        <h2 class="text-sm font-semibold <%= goldText %> tracking-wider uppercase mb-2">Simple & Effective</h2>
+        <h3 class="text-3xl md:text-4xl font-display font-bold text-white">How It Works</h3>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8 relative">
+        <% processSteps.forEach(function(step, index) { %>
+          <div class="relative z-10 p-6 text-center border border-slate-800 rounded-2xl bg-slate-900/50">
+            <div
+              class="w-16 h-16 mx-auto <%= goldBg %> rounded-full flex items-center justify-center text-black font-bold text-2xl mb-6 shadow-lg shadow-amber-500/20">
+              <%= index + 1 %>
+            </div>
+            <h4 class="text-xl font-bold text-white mb-3">
+              <%= step.title %>
+            </h4>
+            <p class="text-slate-400">
+              <%= step.desc %>
+            </p>
           </div>
           <% }) %>
       </div>
     </div>
   </section>
 
-  <!-- ABOUT SECTION (New) -->
+  <!-- ABOUT SECTION -->
   <section id="about" class="py-20">
     <div class="mx-auto max-w-5xl px-4">
       <div
         class="rounded-3xl bg-slate-900 border border-slate-800 p-8 md:p-12 text-center md:text-left md:flex items-center gap-12">
         <div class="md:w-1/2 mb-8 md:mb-0">
           <div
-            class="inline-block rounded-2xl bg-gradient-to-br from-emerald-500 to-blue-600 p-4 shadow-lg transform rotate-3">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-              stroke="currentColor" class="w-16 h-16 text-white">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
-            </svg>
+            class="inline-block rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 p-1 shadow-lg transform rotate-3">
+            <div class="bg-black p-4 rounded-xl">
+              <span class="text-4xl">💎</span>
+            </div>
           </div>
         </div>
         <div class="md:w-1/2">
-          <h2 class="text-3xl font-display font-bold text-white mb-4">About Corazintel</h2>
+          <h2 class="text-3xl font-display font-bold text-white mb-4">Why Corazintel?</h2>
           <p class="text-slate-300 mb-6 leading-relaxed">
-            Corazintel provides multifaceted expertise across technology, finance, and wellness. We believe in
-            delivering high-quality, reliable solutions for every aspect of your life. Whether you need to fix your
-            credit, build a website, or enhance your beauty, we are your trusted partner.
+            We bridge the gap between business, finance, and wellness. Our unique multi-disciplinary approach ensures
+            you get holistic solutions for your lifestyle and legacy.
           </p>
           <div class="grid grid-cols-2 gap-6">
             <div>
@@ -146,7 +175,7 @@
             </div>
             <div>
               <h4 class="text-2xl font-bold text-white">4.9/5</h4>
-              <p class="text-slate-500 text-sm">Customer Rating</p>
+              <p class="text-slate-500 text-sm">Certified Excellence</p>
             </div>
           </div>
         </div>
@@ -154,148 +183,44 @@
     </div>
   </section>
 
-  <!-- TESTIMONIALS SECTION -->
-  <% if (testimonials.length> 0) { %>
-    <section class="py-20 bg-slate-900/30">
-      <div class="mx-auto max-w-6xl px-4">
-        <h2 class="text-center text-3xl font-display font-bold text-white mb-16">Trusted by Happy Clients</h2>
-        <div class="grid gap-6 md:grid-cols-3">
-          <% testimonials.slice(0, 3).forEach(function(t) { %>
-            <div class="relative rounded-2xl border border-slate-800 bg-slate-900/50 p-6 pt-12">
-              <div
-                class="absolute -top-6 left-6 inline-flex h-12 w-12 items-center justify-center rounded-full bg-emerald-600 border-4 border-slate-950 text-white shadow-lg">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-                  <path fill-rule="evenodd"
-                    d="M4.804 21.644A6.707 6.707 0 0 0 6 21.75a6.721 6.721 0 0 0 3.583-1.029c.774.182 1.584.279 2.417.279 5.322 0 9.75-3.97 9.75-9 0-5.03-4.428-9-9.75-9s-9.75 3.97-9.75 9c0 2.409 1.025 4.587 2.674 6.192.234.226.277.428.196.518l-.519.519a.25.25 0 0 0 .148.411 20.73 20.73 0 0 1 1.054.914c.074.068.145.138.211.208ZM5.474 19.34l.02.016.037.032.073.063a19.231 19.231 0 0 1 .453.38 18.23 18.23 0 0 0-1.874-4.887l-.14-.24a.75.75 0 0 1 .18-1.004C4.83 13.12 5.25 12.394 5.25 11.625c0-1.353-1.28-2.625-3-2.625-.415 0-.75-.336-.75-.75.003-3.048 3.53-5.25 7.75-5.25 4.882 0 8.25 3.367 8.25 7.5s-3.368 7.5-8.25 7.5c-.752 0-1.488-.08-2.202-.232a.75.75 0 0 1-.587.728 5.228 5.228 0 0 1-1.396.114 5.222 5.222 0 0 1-1.848-.332Z"
-                    clip-rule="evenodd" />
-                </svg>
-              </div>
-              <p class="mb-4 text-slate-300 italic leading-relaxed">"<%= t.text %>"</p>
-              <div>
-                <p class="font-bold text-white">
-                  <%= t.by %>
-                </p>
-                <div class="flex text-emerald-500 text-xs mt-1">
-                  ★★★★★
-                </div>
-              </div>
-            </div>
-            <% }) %>
+  <!-- FOOTER -->
+  <footer id="contact" class="border-t border-slate-800 bg-slate-950 pt-16 pb-8">
+    <div class="mx-auto max-w-7xl px-4">
+      <div class="grid gap-12 md:grid-cols-4 mb-16">
+        <div class="md:col-span-2">
+          <a class="flex items-center gap-2 font-display text-2xl font-bold text-white mb-6" href="/">
+            <span class="text-3xl">💎</span>
+            Corazintel
+          </a>
+          <p class="text-slate-400 max-w-md leading-relaxed mb-6">
+            <%= positioning %>
+          </p>
+        </div>
+
+        <div>
+          <h3 class="font-bold text-white mb-6">Services</h3>
+          <ul class="space-y-4 text-sm text-slate-400">
+            <% branchKeys.forEach(function(key) { %>
+              <li><a href="<%= branches[key].path %>" class="hover:<%= goldText %>">
+                  <%= branches[key].title %>
+                </a></li>
+              <% }) %>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="font-bold text-white mb-6">Contact</h3>
+          <ul class="space-y-4 text-sm text-slate-400">
+            <li class="flex items-center gap-2">
+              <a href="mailto:contact@corazintel.com" class="hover:text-white">contact@corazintel.com</a>
+            </li>
+          </ul>
         </div>
       </div>
-    </section>
-    <% } %>
 
-      <!-- FAQ SECTION -->
-      <% if (faq.length> 0) { %>
-        <section id="faq" class="py-20">
-          <div class="mx-auto max-w-4xl px-4">
-            <div class="text-center mb-12">
-              <h2 class="text-3xl font-display font-bold text-white">Frequently Asked Questions</h2>
-            </div>
-            <div class="space-y-4">
-              <% faq.forEach(function(item, index) { %>
-                <details
-                  class="group rounded-2xl border border-slate-800 bg-slate-900/30 p-4 [&_summary::-webkit-details-marker]:hidden">
-                  <summary class="flex cursor-pointer items-center justify-between gap-1.5 rounded-lg p-2 text-white">
-                    <h3 class="font-semibold group-hover:text-emerald-400 transition-colors">
-                      <%= item.q %>
-                    </h3>
-                    <span
-                      class="shrink-0 rounded-full bg-slate-800 p-1.5 text-white sm:p-3 transition duration-300 group-open:-rotate-180">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd"
-                          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                          clip-rule="evenodd" />
-                      </svg>
-                    </span>
-                  </summary>
-                  <p class="mt-4 px-2 leading-relaxed text-slate-300">
-                    <%= item.a %>
-                  </p>
-                </details>
-                <% }) %>
-            </div>
-          </div>
-        </section>
-        <% } %>
-
-          <!-- CONTACT / FOOTER -->
-          <footer id="contact" class="border-t border-slate-800 bg-slate-950 pt-16 pb-8">
-            <div class="mx-auto max-w-7xl px-4">
-              <div class="grid gap-12 md:grid-cols-4 mb-16">
-                <div class="md:col-span-2">
-                  <a class="flex items-center gap-2 font-display text-2xl font-bold text-white mb-6" href="/">
-                    <span class="text-3xl">💎</span>
-                    Corazintel
-                  </a>
-                  <p class="text-slate-400 max-w-md leading-relaxed mb-6">
-                    Real Solutions. Multifaceted Expertise. We help you achieve your goals through professional
-                    technology, financial, and wellness services.
-                  </p>
-                  <div class="flex gap-4">
-                    <% if (social.instagram) { %>
-                      <a href="<%= social.instagram %>"
-                        class="rounded-full bg-slate-900 p-2 text-slate-400 hover:bg-emerald-600 hover:text-white transition">
-                        <span class="sr-only">Instagram</span>
-                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                          <path fill-rule="evenodd"
-                            d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772 4.902 4.902 0 011.772-1.153c.636-.247 1.363-.416 2.427-.465C9.673 2.013 10.03 2 12.48 2h.165zM12 7a5 5 0 100 10 5 5 0 000-10zm0 8a3 3 0 110-6 3 3 0 010 6zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"
-                            clip-rule="evenodd" />
-                        </svg>
-                      </a>
-                      <% } %>
-                  </div>
-                </div>
-
-                <div>
-                  <h3 class="font-bold text-white mb-6">Services</h3>
-                  <ul class="space-y-4 text-sm text-slate-400">
-                    <% categories.slice(0, 4).forEach(function(c) { %>
-                      <li><a href="/order-intake?service=<%= c.key %>" class="hover:text-emerald-400">
-                          <%= c.label %>
-                        </a></li>
-                      <% }) %>
-                  </ul>
-                </div>
-
-                <div>
-                  <h3 class="font-bold text-white mb-6">Contact</h3>
-                  <ul class="space-y-4 text-sm text-slate-400">
-                    <% if (contact.email) { %>
-                      <li class="flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                          class="w-4 h-4 text-emerald-500">
-                          <path
-                            d="M1.5 8.67v8.58a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3V8.67l-8.928 5.493a3 3 0 0 1-3.144 0L1.5 8.67Z" />
-                          <path
-                            d="M22.5 6.908V6.75a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3v.158l9.714 5.978a1.5 1.5 0 0 0 1.572 0L22.5 6.908Z" />
-                        </svg>
-                        <a href="mailto:<%= contact.email %>" class="hover:text-white">
-                          <%= contact.email %>
-                        </a>
-                      </li>
-                      <% } %>
-                        <li class="flex items-center gap-2">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                            class="w-4 h-4 text-emerald-500">
-                            <path fill-rule="evenodd"
-                              d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 6a.75.75 0 0 0-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 0 0 0-1.5h-3.75V6Z"
-                              clip-rule="evenodd" />
-                          </svg>
-                          <span>Mon-Fri: 9am - 6pm EST</span>
-                        </li>
-                  </ul>
-                </div>
-              </div>
-
-              <div
-                class="border-t border-slate-900 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500">
-                <p>&copy; 2026 <%= typeof brand !=='undefined' ? brand.name : 'Corazintel' %>. All rights reserved.</p>
-                <div class="flex gap-6">
-                  <a href="#" class="hover:text-slate-300">Privacy Policy</a>
-                  <a href="#" class="hover:text-slate-300">Terms of Service</a>
-                </div>
-              </div>
-            </div>
-          </footer>
+      <div
+        class="border-t border-slate-900 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500">
+        <p>&copy; 2026 Corazintel. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
